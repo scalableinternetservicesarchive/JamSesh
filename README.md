@@ -43,7 +43,7 @@ High traffic of requests that result in database I/O could become a bottleneck, 
 
 ## Team Members
 
-Nick Brown ([@ncbrown](https://github.com/ncbrown))
+Nick Brown ([@ncbrown1](https://github.com/ncbrown1))
 
 <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAibAAAAJDk5ZmRhNjQ3LTM4YzktNDNlZC1hOWY3LTkyNzU2MDg0ZGVhOA.jpg)" title="ncbrown" height="250" />
 
