@@ -44,18 +44,20 @@ High traffic of requests that result in database I/O could become a bottleneck, 
 ## Team Members
 
 Nick Brown ([@ncbrown](https://github.com/ncbrown))
-![ncbrown photo](https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAibAAAAJDk5ZmRhNjQ3LTM4YzktNDNlZC1hOWY3LTkyNzU2MDg0ZGVhOA.jpg)
+
+<img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAibAAAAJDk5ZmRhNjQ3LTM4YzktNDNlZC1hOWY3LTkyNzU2MDg0ZGVhOA.jpg)" title="ncbrown" height="250" />
 
 John Mangel ([@jmangel](https://github.com/jmangel))
-![jmangel photo](https://avatars3.githubusercontent.com/u/6810760?v=3&s=466)
 
+<img title="jmangel" src="https://avatars3.githubusercontent.com/u/6810760?v=3&s=466" height="250"/>
 
 Jake Corina ([@jcorina](https://github.com/jcorina))
-![jcorina photo](https://seclab.cs.ucsb.edu/media/thumbs_cache/people/1422556240627_bw_person_picture.jpg)
 
+<img title="jcorina" src="https://seclab.cs.ucsb.edu/media/thumbs_cache/people/1422556240627_bw_person_picture.jpg" height="250" />
 
 Shayan Sadigh ([@shayanpersonal](https://github.com/shayanpersonal))
-![shayanpersonal photo](https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAR4AAAAJDYzYTU5MTg1LTRlMDQtNGQxMS04YWI4LWMzMzgxY2U1YmM0MA.jpg)
+
+<img title="shayanpersonal" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAR4AAAAJDYzYTU5MTg1LTRlMDQtNGQxMS04YWI4LWMzMzgxY2U1YmM0MA.jpg" height="250" />
 
 
 ## Support & Documentation
