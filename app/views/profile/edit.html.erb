@@ -1,0 +1,40 @@
+<h1>Edit profile</h1>
+
+<form id="edit-profile">
+  Location:<br>
+	<input type="text" name="location">
+  <br><br>
+
+  <table>
+    <tr>
+      <th>Instrument</th>
+      <th>Proficiency</th>
+    </tr>
+    <tr>
+      <th>
+        <select name="instruments">
+          <option value="electricGuitar">Electric Guitar</option>
+          <option value="acousticGuitar">Acoustic Guitar</option>
+          <option value="piano">Piano</option>
+          <option value="keyboard">Keyboard</option>
+        </select>
+      </th>
+      <th>
+        <select>
+          <option value="newb">Newb</option>
+          <option value="beginner">Beginner</option>
+          <option value="novice">Novice</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="experienced">Experienced</option>
+          <option value="expert">Expert</option>
+          <option value="virtuoso">Virtuoso</option>
+        </select>
+      </th>
+    </tr>
+  </table>
+  
+  <button id="add_instrument" onclick="addInstrument">+ Add another instrument</button>
+  <br><br>
+
+  <input type="submit" value="Save">
+</form>
