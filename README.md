@@ -34,7 +34,7 @@ play. Other APIs could be helpful as well.
 The ability to find similar musicians to jam with could be come a bottleneck due to the problem size. The algorithm would probably be an "All Pairs Similarity Search" algorithm, with run time of O(n^2), which would make this part a very expensive operation.
 
 
-## Potential Traffic Bottlenecs
+## Potential Traffic Bottlenecks
 
 What feature, or features, of your site might become a bottleneck due only to an increase in traffic (not database constrained)?
 
