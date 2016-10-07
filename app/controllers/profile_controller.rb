@@ -1,4 +1,6 @@
 class ProfileController < ApplicationController
-	def edit
-  end
+    def home
+    end
+    def edit
+    end
 end
