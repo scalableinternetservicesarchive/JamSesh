@@ -1,3 +1,20 @@
 <div class="container">
   <h1>Hello, World!</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Date Joined</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.created_at.to_date.to_formatted_s(:rfc822) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
