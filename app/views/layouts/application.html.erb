@@ -35,11 +35,31 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li><%= link_to('Settings', edit_user_registration_path) %></li>
+              <li><%= link_to('Sign Out', destroy_user_session_path, :method => :delete) %></li>
+            <% else %>
+              <li><%= link_to('Sign In', new_user_session_path) %></li>
+              <li><%= link_to('Sign Up', new_user_registration_path) %></li>
+            <% end %>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <%= yield %>
+    <div class="body-content">
+      <% if flash[:error] or flash[:notice] or flash[:alert] %>
+        <div class="container">
+          <br/>
+          <%= content_tag(:div, flash[:error], :id => "flash_error", :class => "alert alert-error") if flash[:error] %>
+          <%= content_tag(:div, flash[:notice], :id => "flash_notice", :class => "alert alert-info") if flash[:notice] %>
+          <%= content_tag(:div, flash[:alert], :id => "flash_alert", :class => "alert alert-warning") if flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
 
   </body>
 </html>
