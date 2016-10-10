@@ -1,9 +1,13 @@
 <h1>Edit profile</h1>
 
-<form id="edit-profile">
-  Location:<br>
-	<input type="text" name="location">
-  <br><br>
+<%= form_for @profile do |f| %>
+  <%= f.text_field :first_name %>
+  <%= f.text_field :last_name %>
+  <%= f.number_field :age, in: 0..120 %>
+  <%= telephone_field(:profile, :phone) %>
+  <%= f.text_area :bio, size: "60x12" %>
+  <%= f.submit "Update" %>
+<% end %>
 
   <table>
     <tr>
