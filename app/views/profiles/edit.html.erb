@@ -5,7 +5,9 @@
   <%= f.text_field :last_name %>
   <%= f.number_field :age, in: 0..120 %>
   <%= telephone_field(:profile, :phone) %>
+  
   <%= f.collection_check_boxes(:instrument_ids, Instrument.all, :id, :name) %>
+  
   <%= f.text_area :bio, size: "60x12" %>
   <%= f.submit "Update" %>
 <% end %>

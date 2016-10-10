@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
-    has_and_belongs_to_many :instrument
+    has_many :instrument_profile
+    has_many :instrument, through: :instrument_profile
     belongs_to :user
 end

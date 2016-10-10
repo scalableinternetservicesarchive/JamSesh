@@ -9,7 +9,11 @@
     </tr>
     
     <tr>
-        <td>Instruments: <%= @profile.instrument.ids %></td>
+        <td>Instruments: 
+        <%= @profile.instrument.each do |i| %>
+        <%= i.name %>
+        <% end %>
+        </td>
     </tr>
     
     <tr>

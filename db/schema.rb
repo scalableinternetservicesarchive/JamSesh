@@ -10,18 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010200407) do
+ActiveRecord::Schema.define(version: 20161010230957) do
+
+  create_table "instrument_profiles", force: :cascade do |t|
+    t.integer  "instrument_id"
+    t.integer  "profile_id"
+    t.string   "proficiency"
+    t.integer  "years"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["instrument_id"], name: "index_instrument_profiles_on_instrument_id"
+    t.index ["profile_id"], name: "index_instrument_profiles_on_profile_id"
+  end
 
   create_table "instruments", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "proficiency"
-  end
-
-  create_table "instruments_profiles", id: false, force: :cascade do |t|
-    t.integer "profile_id",    null: false
-    t.integer "instrument_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
