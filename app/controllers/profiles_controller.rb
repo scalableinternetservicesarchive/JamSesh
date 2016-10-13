@@ -17,6 +17,10 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def getInstruments
+    render :json => Instrument.all
+  end
+
   def addInstrument
     if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil
       @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
