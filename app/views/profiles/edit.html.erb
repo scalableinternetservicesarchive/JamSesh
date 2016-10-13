@@ -41,40 +41,45 @@
 
   <br><br>
 
-  <label>Instruments</label><br>
-  <%= f.collection_check_boxes(:instrument_ids, Instrument.all, :id, :name)  do |b| %>
-    <%= b.label(class: "check_box_label") do %>
-      <%= b.check_box(class: "check_box") %>
-      <%= b.object.name %>
-      <!-- <%= select(b, "proficiency", %w[Newb Beginner Novice Intermediate Experienced Expert Virtuoso], {}) %> -->
-    <% end %>
-    <br>
-  <% end %>
-  <br>
-
-  <table>
-    <tr>
-      <th>Instrument</th>
-      <th>Proficiency</th>
-    </tr>
-    <tr>
-      <th>
-        <select name="instruments">
-          <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
-        </select>
-      </th>
-      <th>
-        <select name="proficiency">
-          <option value="newb">Newb</option>
-          <option value="beginner">Beginner</option>
-          <option value="novice">Novice</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="experienced">Experienced</option>
-          <option value="expert">Expert</option>
-          <option value="virtuoso">Virtuoso</option>
-        </select>
-      </th>
-    </tr>
+  <table class="table" id="instrument-table">
+    <thead>
+      <tr>
+        <th>Instrument</th>
+        <th>Proficiency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @profile.instrument_profile.each do |i| %>
+        <tr id="i_id-<%= i.instrument.id %>">
+          <td class="table-content instrument">
+            <%= i.instrument.name %>
+          </td>
+          <td class="table-content proficiency">
+            <%= i.proficiency %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>
+          <select name="instruments">
+            <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
+          </select>
+        </td>
+        <td>
+          <select name="proficiency">
+            <option value="Newb">Newb</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Novice">Novice</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Experienced">Experienced</option>
+            <option value="Expert">Expert</option>
+            <option value="Virtuoso">Virtuoso</option>
+          </select>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 
   <button type="button" id="add_instrument">+ Add instrument</button>

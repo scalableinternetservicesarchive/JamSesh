@@ -18,20 +18,23 @@ class ProfilesController < ApplicationController
   end
 
   def getInstruments
-    render :json => @profile.instrument.all
+    render :json => @profile.instrument_profile.all
   end
 
   def addInstrument
     if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil
       @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
       if @instrument_profile == nil
-        InstrumentProfile.create(:instrument_id => params[:instrument], :profile_id => params[:profile], :proficiency => params[:proficiency])
+        @instrument_profile = InstrumentProfile.create(:instrument_id => params[:instrument], :profile_id => params[:profile], :proficiency => params[:proficiency])
       else
         @instrument_profile.proficiency = params[:proficiency]
         @instrument_profile.save
         # Update instrument_profile with entered proficiency
         # @instrument_profile.
       end
+    end
+    respond_to do |format|
+      format.json { render :json => @instrument_profile.instrument }
     end
   end
 

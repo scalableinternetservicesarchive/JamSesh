@@ -10,21 +10,18 @@
   
   <tr>
     <td>Instruments: 
-    <% @profile.instrument.each do |i| %>
-    <%= i.name %>
-    <% end %>
-    <!-- <table border="1" class="show-instruments-table">
-      <% @profile.instrument.each do |i| %>
+    <table border="1" class="show-instruments-table">
+      <% @profile.instrument_profile.each do |i| %>
         <tr>
           <td class="show-instrument">
-            <%= i.name %>
+            <%= i.instrument.name %>
           </td>
           <td class="show-proficiency">
-            proficiency
+            <%= i.proficiency %>
           </td>
         </tr>
       <% end %>
-    </table> -->
+    </table>
     </td>
   </tr>
 
