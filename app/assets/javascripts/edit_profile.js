@@ -1,24 +1,18 @@
-//=require jquery
-
 $(document).ready(function(){
 
-  console.log($(document));
-	// console.log('ready');
-	// console.log($('#add_instrument'));
-	$('#add_instrument').click(function(event) {    
+  $(document).on('click','#add_instrument', function() {    
     var instrument_id = $("[name='instruments']")[0].value;
     console.log(instrument_id);
 
     var proficiency = $("[name='proficiency']")[0].value;
     console.log(proficiency);
     addInstrument(instrument_id, proficiency);
-	});
+  });
+
 })
 
 function addInstrument(instrument_id, proficiency) {
-	console.log('add instrument');
-
-  var profile_id = 0;
+  var profile_id = $('#profile_id')[0].innerHTML;
 
   $.ajax({
     url: '/profile/addInstrument?instrument=' + instrument_id + '&profile=' + profile_id + '&proficiency=' + proficiency,
@@ -29,7 +23,3 @@ function addInstrument(instrument_id, proficiency) {
     }
   });
 }
-
-/*if (document.querySelector('#add_instrument')) {
-  document.querySelector('#add_instrument').addEventListener("click", addInstrument());
-}*/

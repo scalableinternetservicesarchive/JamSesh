@@ -23,6 +23,8 @@ class ProfilesController < ApplicationController
       if @instrument_profile == nil
         InstrumentProfile.create(:instrument_id => params[:instrument], :profile_id => params[:profile], :proficiency => params[:proficiency])
       else
+        @instrument_profile.proficiency = params[:proficiency]
+        @instrument_profile.save
         # Update instrument_profile with entered proficiency
         # @instrument_profile.
       end
