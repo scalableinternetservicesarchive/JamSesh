@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_profile, only: [:show, :edit, :update, :destroy, :addInstrument]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy, :getInstruments, :addInstrument]
   
   def show
   end
@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
   end
 
   def getInstruments
-    render :json => Instrument.all
+    render :json => @profile.instrument.all
   end
 
   def addInstrument
