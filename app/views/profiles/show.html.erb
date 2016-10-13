@@ -1,22 +1,38 @@
 <h1><%= @profile.first_name + ' ' +  @profile.last_name %></h1>
 
 <table>
-    <tr>
-        <td>Age: <%= @profile.age %></td>
-    </tr>
-    <tr>
-        <td>Phone Number: <%= @profile.phone %></td>
-    </tr>
-    
-    <tr>
-        <td>Instruments: 
-        <%= @profile.instrument.each do |i| %>
-        <%= i.name %>
-        <% end %>
-        </td>
-    </tr>
-    
-    <tr>
-        <td>Bio: <%= @profile.bio %></td>
-    </tr>
+  <tr>
+    <td>Age: <%= @profile.age %></td>
+  </tr>
+  <tr>
+    <td>Phone Number: <%= @profile.phone %></td>
+  </tr>
+  
+  <tr>
+    <td>Instruments: 
+    <% @profile.instrument.each do |i| %>
+    <%= i.name %>
+    <% end %>
+    <!-- <table border="1" class="show-instruments-table">
+      <% @profile.instrument.each do |i| %>
+        <tr>
+          <td class="show-instrument">
+            <%= i.name %>
+          </td>
+          <td class="show-proficiency">
+            proficiency
+          </td>
+        </tr>
+      <% end %>
+    </table> -->
+    </td>
+  </tr>
+
+  <tr>
+    <td>Location: <%= @profile.location %></td>
+  </tr>
+  
+  <tr>
+    <td>Bio: <%= @profile.bio %></td>
+  </tr>
 </table>

@@ -1,18 +1,57 @@
 <h1>Edit profile</h1>
 
+
 <%= form_for @profile do |f| %>
-  <%= f.text_field :first_name %>
-  <%= f.text_field :last_name %>
-  <%= f.number_field :age, in: 0..120 %>
-  <%= telephone_field(:profile, :phone) %>
-  
-  <%= f.collection_check_boxes(:instrument_ids, Instrument.all, :id, :name) %>
-  
-  <%= f.text_area :bio, size: "60x12" %>
-  <%= f.submit "Update" %>
-<% end %>
+  <table>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+    <tr>
+      <th>
+        <%= f.text_field :first_name %>
+      </th>
+      <th>
+        <%= f.text_field :last_name %>
+      </th>
+    </tr>
+  </table>
+  <br>
 
   <table>
+    <tr>
+      <th>Age</th>
+      <th>Phone Number</th>
+    </tr>
+    <tr>
+      <th>
+        <%= f.number_field :age, in: 0..120 %>
+      </th>
+      <th>
+        <%= telephone_field(:profile, :phone) %>
+      </th>
+    </tr>
+  </table>
+  <br>
+
+  <label>Location</label>
+  <br>
+  <%= f.text_field :location %>
+
+  <br><br>
+
+  <label>Instruments</label><br>
+  <%= f.collection_check_boxes(:instrument_ids, Instrument.all, :id, :name)  do |b| %>
+    <%= b.label(class: "check_box_label") do %>
+      <%= b.check_box(class: "check_box") %>
+      <%= b.object.name %>
+      <!-- <%= select(b, "proficiency", %w[Newb Beginner Novice Intermediate Experienced Expert Virtuoso], {}) %> -->
+    <% end %>
+    <br>
+  <% end %>
+  <br>
+
+  <!-- <table>
     <tr>
       <th>Instrument</th>
       <th>Proficiency</th>
@@ -20,14 +59,11 @@
     <tr>
       <th>
         <select name="instruments">
-          <option value="electricGuitar">Electric Guitar</option>
-          <option value="acousticGuitar">Acoustic Guitar</option>
-          <option value="piano">Piano</option>
-          <option value="keyboard">Keyboard</option>
+          <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
         </select>
       </th>
       <th>
-        <select>
+        <select name="proficiency">
           <option value="newb">Newb</option>
           <option value="beginner">Beginner</option>
           <option value="novice">Novice</option>
@@ -39,9 +75,47 @@
       </th>
     </tr>
   </table>
-  
-  <button id="add_instrument" onclick="addInstrument">+ Add another instrument</button>
-  <br><br>
 
-  <input type="submit" value="Save">
-</form>
+  <button type="button" id="add_instrument">+ Add instrument</button>
+  <br><br> -->
+
+  <label for="bio">Bio</label><br>
+  <%= f.text_area :bio, size: "60x12" %>
+
+  <br>
+
+  <%= f.submit "Update" %>
+<% end %>
+
+<!-- <table>
+  <tr>
+    <th>Instrument</th>
+    <th>Proficiency</th>
+  </tr>
+  <tr>
+    <th>
+      <select name="instruments">
+        <option value="electricGuitar">Electric Guitar</option>
+        <option value="acousticGuitar">Acoustic Guitar</option>
+        <option value="piano">Piano</option>
+        <option value="keyboard">Keyboard</option>
+      </select>
+    </th>
+    <th>
+      <select>
+        <option value="newb">Newb</option>
+        <option value="beginner">Beginner</option>
+        <option value="novice">Novice</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="experienced">Experienced</option>
+        <option value="expert">Expert</option>
+        <option value="virtuoso">Virtuoso</option>
+      </select>
+    </th>
+  </tr>
+</table>
+
+<button id="add_instrument" onclick="addInstrument">+ Add another instrument</button>
+<br><br>
+
+<input type="submit" value="Save"> -->
