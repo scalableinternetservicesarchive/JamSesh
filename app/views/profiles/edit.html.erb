@@ -1,94 +1,97 @@
-<h1>Edit profile</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <h1 class="title">Edit profile</h1>
 
-<span style="display: none;" id="profile_id"><%= @profile.id %></span>
+      <span style="display: none;" id="profile_id"><%= @profile.id %></span>
 
-<%= form_for @profile do |f| %>
-  <table>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-    </tr>
-    <tr>
-      <th>
-        <%= f.text_field :first_name %>
-      </th>
-      <th>
-        <%= f.text_field :last_name %>
-      </th>
-    </tr>
-  </table>
-  <br>
+      <%= form_for @profile do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <%= f.label :first_name %><br>
+              <%= f.text_field :first_name, class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <%= f.label :last_name %><br>
+              <%= f.text_field :last_name, class: "form-control" %>
+            </div>
+          </div>
+        </div>
 
-  <table>
-    <tr>
-      <th>Age</th>
-      <th>Phone Number</th>
-    </tr>
-    <tr>
-      <th>
-        <%= f.number_field :age, in: 0..120 %>
-      </th>
-      <th>
-        <%= telephone_field(:profile, :phone) %>
-      </th>
-    </tr>
-  </table>
-  <br>
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="form-group">
+              <%= f.label :age %><br>
+              <%= f.number_field :age, in: 0..120, class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-8">
+            <div class="form-group">
+              <%= f.label :phone %><br>
+              <%= f.telephone_field :phone, class: "form-control" %>
+            </div>
+          </div>
+        </div>
 
-  <label>Location</label>
-  <br>
-  <%= f.text_field :location %>
+        <div class="form-group">
+          <%= f.label :location %>
+          <%= f.text_field :location, class: "form-control" %>
+        </div>
 
-  <br><br>
+        <table class="table" id="instrument-table">
+          <thead>
+            <tr>
+              <th>Instrument</th>
+              <th>Proficiency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @profile.instrument_profile.each do |i| %>
+              <tr id="i_id-<%= i.instrument.id %>">
+                <td class="table-content instrument">
+                  <%= i.instrument.name %>
+                </td>
+                <td class="table-content proficiency">
+                  <%= i.proficiency %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <select name="instruments" class="form-control">
+                  <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
+                </select>
+                <button type="button" class="btn btn-primary" id="add_instrument">+ Add instrument</button>
+              </td>
+              <td>
+                <select name="proficiency" class="form-control">
+                  <option value="Newb">Newb</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Novice">Novice</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Experienced">Experienced</option>
+                  <option value="Expert">Expert</option>
+                  <option value="Virtuoso">Virtuoso</option>
+                </select>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
 
-  <table class="table" id="instrument-table">
-    <thead>
-      <tr>
-        <th>Instrument</th>
-        <th>Proficiency</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @profile.instrument_profile.each do |i| %>
-        <tr id="i_id-<%= i.instrument.id %>">
-          <td class="table-content instrument">
-            <%= i.instrument.name %>
-          </td>
-          <td class="table-content proficiency">
-            <%= i.proficiency %>
-          </td>
-        </tr>
+        <div class="form-group">
+          <%= f.label :bio %>
+          <%= f.text_area :bio, size: "60x4", class: "form-control" %>
+        </div>
+
+        <%= f.submit "Update", class: "btn btn-primary form-control" %>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>
-          <select name="instruments">
-            <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
-          </select>
-        </td>
-        <td>
-          <select name="proficiency">
-            <option value="Newb">Newb</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Novice">Novice</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Experienced">Experienced</option>
-            <option value="Expert">Expert</option>
-            <option value="Virtuoso">Virtuoso</option>
-          </select>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-
-  <button type="button" id="add_instrument">+ Add instrument</button>
-  <br><br>
-
-  <label for="bio">Bio</label><br>
-  <%= f.text_area :bio, size: "60x12" %>
-
-  <br>
-
-  <%= f.submit "Update" %>
-<% end %>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>
