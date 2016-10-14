@@ -21,7 +21,7 @@ function addInstrument(instrument_id, proficiency) {
         $('#i_id-' + instrument_id + ' .proficiency').html(proficiency);
       }
       else {
-        $('#instrument-table tbody tr:last').after('<tr><td>' + data.name + '</td><td>' + proficiency + '</td></tr>');
+        $('#instrument-table tbody').append('<tr><td>' + data.name + '</td><td>' + proficiency + '</td></tr>');
       }
     }
   });

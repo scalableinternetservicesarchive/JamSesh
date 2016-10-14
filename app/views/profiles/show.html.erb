@@ -1,17 +1,19 @@
-<h1><%= @profile.first_name + ' ' +  @profile.last_name %></h1>
+<div class="container">
+  <h1><%= @profile.first_name + ' ' +  @profile.last_name %></h1>
 
-<table>
-  <tr>
-    <td>Age: <%= @profile.age %></td>
-  </tr>
-  <tr>
-    <td>Phone Number: <%= @profile.phone %></td>
-  </tr>
-  
-  <tr>
-    <td>Instruments: 
-    <table border="1" class="show-instruments-table">
-      <% @profile.instrument_profile.each do |i| %>
+  <p><strong>Age:</strong> <% if @profile.age.blank? %>Not Provided<% else %><%= @profile.age %><% end %></p>
+  <p><strong>Phone Number:</strong> <% if @profile.phone.blank? %>Not Provided<% else %><%= @profile.phone %><% end %></p>
+
+  <td><strong>Instruments:</strong>
+  <table class="show-instruments-table table table-bordered">
+    <thead>
+      <tr>
+        <th>Instrument Type</th>
+        <th>Proficiency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @profile.instrument_profile.each do |i| %>
         <tr>
           <td class="show-instrument">
             <%= i.instrument.name %>
@@ -20,16 +22,13 @@
             <%= i.proficiency %>
           </td>
         </tr>
+      <% end.empty? %>
+        <tr><td colspan="2">You play no instruments!</td></tr>
       <% end %>
-    </table>
-    </td>
-  </tr>
+    </tbody>
+  </table>
 
-  <tr>
-    <td>Location: <%= @profile.location %></td>
-  </tr>
-  
-  <tr>
-    <td>Bio: <%= @profile.bio %></td>
-  </tr>
-</table>
+  <p><strong>Location:</strong> <% if @profile.location.blank? %>Not Provided<% else %><%= @profile.location %><% end %></p>
+
+  <p><strong>Bio:</strong> <% if @profile.bio.blank? %>Not Provided<% else %><%= @profile.bio %><% end %></p>
+</div>
