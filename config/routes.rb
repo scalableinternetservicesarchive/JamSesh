@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'spotty_api/song'
+
+  get 'spotty_api/artist'
+
+  get 'spotty_api/album'
+
   root "application#home"
   devise_for :users
   
