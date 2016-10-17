@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+piano:
+  id: 0
+  name: Piano
 
-two:
-  name: MyString
+guitar:
+  id: 1
+  name: Guitar
+
+drums:
+  id: 2
+  name: Drums

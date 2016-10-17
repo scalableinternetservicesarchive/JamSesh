@@ -4,8 +4,27 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one: 
+   instrument: one
+   profile: one
+   proficiency: "Newb"
+
+two: 
+  instrument: two
+  profile: two
+  proficiency: "Virtuoso"
+
+three: 
+  instrument: three
+  profile: three
+  proficiency: "Expert"
+
+four: 
+  instrument: two
+  profile: three
+  proficiency: "Amateur"
+
+five: 
+  instrument: three
+  profile: one
+  proficiency: "Newb"

@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  image_url: MyString
+  id: 0
+  name: JamGroup1
+  image_url: ""
 
 two:
-  name: MyString
-  image_url: MyString
+  id: 1
+  name: JamGroup2
+  image_url: ""

@@ -7,3 +7,11 @@
 one: 
     id: 0
     email: "test@test.com"
+
+two:
+    id: 1
+    email: "test1@test.com"
+
+three:
+    id: 2
+    email: "test2@test.com"
