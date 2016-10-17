@@ -5,6 +5,8 @@
     <thead>
       <tr>
         <th>Email</th>
+        <th>Location</th>
+        <th>Instruments</th>
         <th>Date Joined</th>
       </tr>
     </thead>
@@ -12,7 +14,14 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.email %></td>
+          <td><%= user.profile.location %></td>
+          <td>
+          <% user.profile.instrument.each do |instrument| %>
+            <%= instrument.name %>
+            <% end %>
+          </td>
           <td><%= user.created_at.to_date.to_formatted_s(:rfc822) %></td>
+          
         </tr>
       <% end %>
     </tbody>
