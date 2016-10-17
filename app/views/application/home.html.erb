@@ -2,10 +2,12 @@
   <h1>Meet our users!</h1>
 
 <%= form_tag(root_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :location, params[:location], placeholder: "Find by location" %>
 <%= text_field_tag :age, params[:age], placeholder: "Find by age" %>
+<%= text_field_tag :instrument, params[:instrument], placeholder: "Find by instrument" %>
 <%= submit_tag "Search" %>
-
 <% end %>
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -17,23 +19,23 @@
       </tr>
     </thead>
     <tbody>
-      <% if @users.present? %>
-        <% @users.each do |user| %>
+      <% if @profiles.present? %>
+        <% @profiles.each do |profile| %>
           <tr>
-            <td><%= user.profile.first_name + ' ' + user.profile.last_name%></td>
-            <td><%= user.profile.age %></td>
-            <td><%= user.profile.location %></td>
+            <td><%= profile.first_name + ' ' + profile.last_name%></td>
+            <td><%= profile.age %></td>
+            <td><%= profile.location %></td>
             <td>
-            <% user.profile.instrument.each do |instrument| %>
+            <% profile.instrument.each do |instrument| %>
               <%= instrument.name %>
               <% end %>
             </td>
-            <td><%= user.created_at.to_date.to_formatted_s(:rfc822) %></td>
+            <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
             
           </tr>
         <% end %>
       <% else %>
-      <p>There are no users of age <%= params[:age] %>.</p>
+      <p>We could not find users matching your search request.</p>
     <% end %>
     </tbody>
   </table>

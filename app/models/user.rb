@@ -3,8 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
   scope :by_age, lambda { |age| self.joins(:profile).where(profiles: {:age => age} )}
-  scope :by_location, lambda { |location| self.joins(:profile).where(profiles: {:location => location})}
-  
+  scope :by_location, lambda { |location| self.joins(:profile).where(Profile.arel_table[:location].lower.matches("%#{location.downcase}%")) }
+  #scope :by_instrument, lambda { |instrument| self.joins(:profile).joins(:instrument_profile, :instrument).where(Instrument.arel_table[:name].lower.matches("%#{instrument.downcase}%")) }
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          

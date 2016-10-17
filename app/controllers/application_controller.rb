@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def home
-    @users = User.all
-    @users = User.by_age(params[:age]) if params[:age].present?
-    @users = User.by_location(params[:location]) if params[:location].present?
+    @profiles = Profile.all
+    @profiles = @profiles.by_age(params[:age]) if params[:age].present?
+    @profiles = @profiles.by_location(params[:location]) if params[:location].present?
+    @profiles = @profiles.by_instrument(params[:instrument]) if params[:instrument].present?
     render "home"
   end
 
