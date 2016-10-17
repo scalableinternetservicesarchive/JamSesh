@@ -56,7 +56,11 @@
                   <%= i.instrument.name %>
                 </td>
                 <td class="table-content proficiency">
-                  <%= i.proficiency %>
+                  <span class="current-proficiency"><%= i.proficiency %></span>
+                  
+                  <button type="button" id="edit-i_id-<%= i.instrument.id %>" class="btn btn-primary edit_instrument">Edit</button>
+                  
+                  <!--<button type="button" id="remove-i_id-<%= i.instrument.id %>" class="btn btn-primary">Remove</button>-->
                 </td>
               </tr>
             <% end %>
