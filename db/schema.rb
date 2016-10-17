@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010230957) do
+ActiveRecord::Schema.define(version: 20161017061651) do
 
   create_table "instrument_profiles", force: :cascade do |t|
     t.integer  "instrument_id"
@@ -25,6 +25,24 @@ ActiveRecord::Schema.define(version: 20161010230957) do
 
   create_table "instruments", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jam_group_members", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "jam_group_id"
+    t.integer  "status",       default: 0
+    t.integer  "invited_by"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["jam_group_id"], name: "index_jam_group_members_on_jam_group_id"
+    t.index ["profile_id"], name: "index_jam_group_members_on_profile_id"
+  end
+
+  create_table "jam_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
