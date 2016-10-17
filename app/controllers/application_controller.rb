@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
     @users = User.all
     render "home"
   end
+
 end
