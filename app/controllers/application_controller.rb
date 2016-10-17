@@ -5,7 +5,17 @@ class ApplicationController < ActionController::Base
 
   def home
     @users = User.all
+    @users = User.by_age(params[:age]) if params[:age].present?
+    @users = User.by_location(params[:location]) if params[:location].present?
     render "home"
   end
+
+
+  private
+
+  def application_params
+    params.require(:application).permit(:age, :location, :instrument)
+  end
+  
 
 end

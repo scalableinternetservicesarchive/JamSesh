@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  
+  scope :by_age, lambda { |age| self.joins(:profile).where(profiles: {:age => age} )}
+  scope :by_location, lambda { |location| self.joins(:profile).where(profiles: {:location => location})}
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
