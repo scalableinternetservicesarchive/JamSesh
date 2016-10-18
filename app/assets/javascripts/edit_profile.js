@@ -60,39 +60,44 @@ function addInstrument(instrument_id, proficiency) {
         // );
       }
       else {
-        $('#instrument-table tbody').append(
-          '<tr id="i_id-' + instrument_id + '">'
-          + '<td class="table-content instrument">' + data.name + '</td>'
-          + '<td class="table-content proficiency">' 
-          + '<span class="current-proficiency">' + proficiency + '</span>'
-          + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
-          + '</td></tr>');
-          
-          '<tr id="i_id-' + instrument_id + '">'
-          + '<td class="table-content instrument">' + data.name + '</td>'
-          + '<td class="table-content proficiency">' 
-          + '<div class="show-proficiency">'
-          + '<span class="current-proficiency">' + proficiency + '</span>'
-          + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
-          //+ '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary">Remove</button>'
-          + '</div>'
-                  
-          + '<div class="update-proficiency hidden">'
-          + '<select id="proficiency-i_id-' + instrument_id + '" class="form-control" style="width: auto; display: inline;">'
-          + '<option value="Newb">Newb</option>'
-          + '<option value="Beginner">Beginner</option>'
-          + '<option value="Novice">Novice</option>'
-          + '<option value="Intermediate">Intermediate</option>'
-          + '<option value="Experienced">Experienced</option>'
-          + '<option value="Expert">Expert</option>'
-          + '<option value="Virtuoso">Virtuoso</option>'
-          + '</select>'
-                    
-          + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
-          + '</div>'
-          + '</td>'
-          + '</tr>'
+        addInstrumentRow(instrument_id, data.name, proficiency);
       }
     }
   });
+}
+
+function addInstrumentRow(instrument_id, instrument_name, proficiency) {
+  $('#instrument-table tbody').append(
+    // '<tr id="i_id-' + instrument_id + '">'
+    // + '<td class="table-content instrument">' + instrument_name + '</td>'
+    // + '<td class="table-content proficiency">' 
+    // + '<span class="current-proficiency">' + proficiency + '</span>'
+    // + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
+    // + '</td></tr>');
+    
+    '<tr id="i_id-' + instrument_id + '">'
+    + '<td class="table-content instrument">' + instrument_name + '</td>'
+    + '<td class="table-content proficiency">' 
+    + '<div class="show-proficiency">'
+    + '<span class="current-proficiency">' + proficiency + '</span>'
+    + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
+    //+ '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary">Remove</button>'
+    + '</div>'
+            
+    + '<div class="update-proficiency hidden">'
+    + '<select id="proficiency-i_id-' + instrument_id + '" class="form-control" style="width: auto; display: inline;">'
+    + '<option value="Newb">Newb</option>'
+    + '<option value="Beginner">Beginner</option>'
+    + '<option value="Novice">Novice</option>'
+    + '<option value="Intermediate">Intermediate</option>'
+    + '<option value="Experienced">Experienced</option>'
+    + '<option value="Expert">Expert</option>'
+    + '<option value="Virtuoso">Virtuoso</option>'
+    + '</select>'
+              
+    + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
+    + '</div>'
+    + '</td>'
+    + '</tr>'
+  );
 }
