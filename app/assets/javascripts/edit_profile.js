@@ -10,10 +10,10 @@ $(document).ready(function(){
     var instrument_id = event.target.id.split('-').pop();
     var proficiency = $('#i_id-' + instrument_id + ' .proficiency .current-proficiency')[0].innerText;
     
+    $('#proficiency-i_id-' + instrument_id).val(proficiency);
+    
     $('#i_id-' + instrument_id + ' .show-proficiency').addClass('hidden');
     $('#i_id-' + instrument_id + ' .update-proficiency').removeClass('hidden');
-    
-    $('#proficiency-i_id-' + instrument_id).val(proficiency);
   });
   
   $(document).on('click', '.update_instrument', function(event) {
@@ -39,10 +39,10 @@ function addInstrument(instrument_id, proficiency) {
       var instrument_row = $('#i_id-' + instrument_id);
       
       if (instrument_row.length) {
+        $('#i_id-' + instrument_id + ' .current-proficiency').text(proficiency);
+        
         $('#i_id-' + instrument_id + ' .show-proficiency').removeClass('hidden');
         $('#i_id-' + instrument_id + ' .update-proficiency').addClass('hidden');
-        
-        $('#i_id-' + instrument_id + ' .current-proficiency').text(proficiency);
       }
       else {
         addInstrumentRow(instrument_id, data.name, proficiency);
