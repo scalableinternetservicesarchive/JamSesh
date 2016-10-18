@@ -12,21 +12,6 @@ $(document).ready(function(){
     
     $('#i_id-' + instrument_id + ' .show-proficiency').addClass('hidden');
     $('#i_id-' + instrument_id + ' .update-proficiency').removeClass('hidden');
-
-    // $('#i_id-' + instrument_id + ' .proficiency').html(
-    //   '<select id="proficiency-i_id-' 
-    //   + instrument_id 
-    //   + '" class="form-control">'
-    //   + '<option value="Newb">Newb</option>'
-    //   + '<option value="Beginner">Beginner</option>'
-    //   + '<option value="Novice">Novice</option>'
-    //   + '<option value="Intermediate">Intermediate</option>'
-    //   + '<option value="Experienced">Experienced</option>'
-    //   + '<option value="Expert">Expert</option>'
-    //   + '<option value="Virtuoso">Virtuoso</option>'
-    //   + '</select>'
-    //   + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
-    // );
     
     $('#proficiency-i_id-' + instrument_id).val(proficiency);
   });
@@ -35,6 +20,11 @@ $(document).ready(function(){
     var instrument_id = event.target.id.split('-').pop();
     var proficiency =$('#proficiency-i_id-' + instrument_id)[0].value;
     addInstrument(instrument_id, proficiency);
+  });
+  
+  $(document).on('click', '.remove_instrument', function(event) {
+    var instrument_id = event.target.id.split('-').pop();
+    removeInstrument(instrument_id);
   });
 
 })
@@ -47,17 +37,12 @@ function addInstrument(instrument_id, proficiency) {
     type: 'POST',
     success: function(data) {
       var instrument_row = $('#i_id-' + instrument_id);
-
+      
       if (instrument_row.length) {
         $('#i_id-' + instrument_id + ' .show-proficiency').removeClass('hidden');
         $('#i_id-' + instrument_id + ' .update-proficiency').addClass('hidden');
         
         $('#i_id-' + instrument_id + ' .current-proficiency').text(proficiency);
-        
-        // $('#i_id-' + instrument_id + ' .proficiency .show-proficiency').html(
-        //   '<span class="current-proficiency">' + proficiency + '</span>' 
-        //   + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
-        // );
       }
       else {
         addInstrumentRow(instrument_id, data.name, proficiency);
@@ -81,7 +66,7 @@ function addInstrumentRow(instrument_id, instrument_name, proficiency) {
     + '<div class="show-proficiency">'
     + '<span class="current-proficiency">' + proficiency + '</span>'
     + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
-    //+ '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary">Remove</button>'
+    + '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary remove_instrument">Remove</button>'
     + '</div>'
             
     + '<div class="update-proficiency hidden">'
@@ -100,4 +85,19 @@ function addInstrumentRow(instrument_id, instrument_name, proficiency) {
     + '</td>'
     + '</tr>'
   );
+}
+
+function removeInstrument(instrument_id) {
+  var profile_id = $('#profile_id')[0].innerHTML;
+
+  $.ajax({
+    url: '/profile/removeInstrument?instrument=' + instrument_id + '&profile=' + profile_id,
+    type: 'DELETE',
+    success: function(data) {
+      var instrument_row = $('#i_id-' + instrument_id);
+      if (instrument_row){
+        instrument_row.remove();
+      }
+    }
+  });
 }
