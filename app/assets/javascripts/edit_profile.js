@@ -65,7 +65,9 @@ function addInstrumentRow(instrument_id, instrument_name, proficiency) {
     + '<td class="table-content proficiency">' 
     + '<div class="show-proficiency">'
     + '<span class="current-proficiency">' + proficiency + '</span>'
+    + '\n'
     + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
+    + '\n'
     + '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary remove_instrument">Remove</button>'
     + '</div>'
             
@@ -79,7 +81,7 @@ function addInstrumentRow(instrument_id, instrument_name, proficiency) {
     + '<option value="Expert">Expert</option>'
     + '<option value="Virtuoso">Virtuoso</option>'
     + '</select>'
-              
+    + '\n'
     + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
     + '</div>'
     + '</td>'
