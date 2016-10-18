@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :profile do
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
+    delete 'removeInstrument' => 'profiles#removeInstrument'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
