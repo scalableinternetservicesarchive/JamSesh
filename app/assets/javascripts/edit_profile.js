@@ -9,22 +9,26 @@ $(document).ready(function(){
   $(document).on('click', '.edit_instrument', function(event) {
     var instrument_id = event.target.id.split('-').pop();
     var proficiency = $('#i_id-' + instrument_id + ' .proficiency .current-proficiency')[0].innerText;
+    
+    $('#i_id-' + instrument_id + ' .show-proficiency').addClass('hidden');
+    $('#i_id-' + instrument_id + ' .update-proficiency').removeClass('hidden');
 
-    $('#i_id-' + instrument_id + ' .proficiency').html(
-      '<select id="proficiency-i_id-' 
-      + instrument_id 
-      + '" class="form-control">'
-      + '<option value="Newb">Newb</option>'
-      + '<option value="Beginner">Beginner</option>'
-      + '<option value="Novice">Novice</option>'
-      + '<option value="Intermediate">Intermediate</option>'
-      + '<option value="Experienced">Experienced</option>'
-      + '<option value="Expert">Expert</option>'
-      + '<option value="Virtuoso">Virtuoso</option>'
-      + '</select>'
-      + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
-    );
-    $('#proficiency-i_id-' + instrument_id)[0].value = proficiency;
+    // $('#i_id-' + instrument_id + ' .proficiency').html(
+    //   '<select id="proficiency-i_id-' 
+    //   + instrument_id 
+    //   + '" class="form-control">'
+    //   + '<option value="Newb">Newb</option>'
+    //   + '<option value="Beginner">Beginner</option>'
+    //   + '<option value="Novice">Novice</option>'
+    //   + '<option value="Intermediate">Intermediate</option>'
+    //   + '<option value="Experienced">Experienced</option>'
+    //   + '<option value="Expert">Expert</option>'
+    //   + '<option value="Virtuoso">Virtuoso</option>'
+    //   + '</select>'
+    //   + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
+    // );
+    
+    $('#proficiency-i_id-' + instrument_id).val(proficiency);
   });
   
   $(document).on('click', '.update_instrument', function(event) {
@@ -45,10 +49,15 @@ function addInstrument(instrument_id, proficiency) {
       var instrument_row = $('#i_id-' + instrument_id);
 
       if (instrument_row.length) {
-        $('#i_id-' + instrument_id + ' .proficiency').html(
-          '<span class="current-proficiency">' + proficiency + '</span>' 
-          + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
-        );
+        $('#i_id-' + instrument_id + ' .show-proficiency').removeClass('hidden');
+        $('#i_id-' + instrument_id + ' .update-proficiency').addClass('hidden');
+        
+        $('#i_id-' + instrument_id + ' .current-proficiency').text(proficiency);
+        
+        // $('#i_id-' + instrument_id + ' .proficiency .show-proficiency').html(
+        //   '<span class="current-proficiency">' + proficiency + '</span>' 
+        //   + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
+        // );
       }
       else {
         $('#instrument-table tbody').append(
@@ -58,6 +67,31 @@ function addInstrument(instrument_id, proficiency) {
           + '<span class="current-proficiency">' + proficiency + '</span>'
           + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
           + '</td></tr>');
+          
+          '<tr id="i_id-' + instrument_id + '">'
+          + '<td class="table-content instrument">' + data.name + '</td>'
+          + '<td class="table-content proficiency">' 
+          + '<div class="show-proficiency">'
+          + '<span class="current-proficiency">' + proficiency + '</span>'
+          + '<button type="button" id="edit-i_id-' + instrument_id + '" class="btn btn-primary edit_instrument">Edit</button>'
+          //+ '<button type="button" id="remove-i_id-' + instrument_id + '" class="btn btn-primary">Remove</button>'
+          + '</div>'
+                  
+          + '<div class="update-proficiency hidden">'
+          + '<select id="proficiency-i_id-' + instrument_id + '" class="form-control" style="width: auto; display: inline;">'
+          + '<option value="Newb">Newb</option>'
+          + '<option value="Beginner">Beginner</option>'
+          + '<option value="Novice">Novice</option>'
+          + '<option value="Intermediate">Intermediate</option>'
+          + '<option value="Experienced">Experienced</option>'
+          + '<option value="Expert">Expert</option>'
+          + '<option value="Virtuoso">Virtuoso</option>'
+          + '</select>'
+                    
+          + '<button type="button" id="update-i_id-' + instrument_id + '" class="btn btn-primary update_instrument">Update</button>'
+          + '</div>'
+          + '</td>'
+          + '</tr>'
       }
     }
   });
