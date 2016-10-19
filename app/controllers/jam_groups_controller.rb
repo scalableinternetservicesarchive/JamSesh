@@ -6,7 +6,11 @@ class JamGroupsController < ApplicationController
   # GET /jam_groups
   # GET /jam_groups.json
   def index
-    @jam_groups = JamGroup.all
+    if params[:all] == 'true'
+      @jam_groups = JamGroup.all
+    else
+      @jam_groups = current_user.profile.jam_groups.all
+    end
   end
 
   # GET /jam_groups/1

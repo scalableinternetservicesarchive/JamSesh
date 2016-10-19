@@ -4,7 +4,7 @@
   <p><%= link_to 'Create a Jam Group', new_jam_group_path %></p>
 
   <ul class="media-list">
-    <% @jam_groups.each do |jam_group| %>
+    <% if @jam_groups.each do |jam_group| %>
       <li class="media well">
         <div class="media-left">
           <%= link_to jam_group do %>
@@ -16,6 +16,8 @@
           <p><%= jam_group.description %></p>
         </div>
       </li>
+    <% end.empty? %>
+      <h3>Looks like you don't have any jam groups set up yet! Try creating one.</h3>
     <% end %>
   </ul>
 
