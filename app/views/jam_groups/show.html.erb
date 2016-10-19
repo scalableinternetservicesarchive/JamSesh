@@ -11,7 +11,8 @@
   <p><%= @jam_group.description %></p>
 
   <%= link_to 'Edit', edit_jam_group_path(@jam_group) %> |
-  <%= link_to 'Back', jam_groups_path %>
+  <%= link_to 'Back', jam_groups_path %> |
+  <%= link_to 'Destroy', @jam_group, method: :delete, data: { confirm: 'Are you sure?' }, class: "text-danger" %>
 
   <hr>
 

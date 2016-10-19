@@ -1,33 +1,22 @@
 <div class="container">
-  <p id="notice"><%= notice %></p>
-
   <h1>Jam Groups</h1>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Image URL</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+  <p><%= link_to 'Create a Jam Group', new_jam_group_path %></p>
 
-    <tbody>
-      <% @jam_groups.each do |jam_group| %>
-        <tr>
-          <td><%= jam_group.id %></td>
-          <td><%= jam_group.name %></td>
-          <td><%= jam_group.image_url %></td>
-          <td><%= link_to 'Show', jam_group %></td>
-          <td><%= link_to 'Edit', edit_jam_group_path(jam_group) %></td>
-          <td><%= link_to 'Destroy', jam_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <ul class="media-list">
+    <% @jam_groups.each do |jam_group| %>
+      <li class="media well">
+        <div class="media-left">
+          <%= link_to jam_group do %>
+            <img class="media-object responsive-image" src="<%= jam_group.image_url %>" alt="<%= jam_group.name %> Image" height="80" width="80">
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading"><%= link_to jam_group.name, jam_group %></h4>
+          <p><%= jam_group.description %></p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 
-  <br>
-
-  <%= link_to 'New Jam Group', new_jam_group_path %>
 </div>
