@@ -63,10 +63,30 @@ class JamGroupsController < ApplicationController
   # DELETE /jam_groups/1
   # DELETE /jam_groups/1.json
   def destroy
-    @jam_group.destroy
-    respond_to do |format|
-      format.html { redirect_to jam_groups_url, notice: 'Jam group was successfully destroyed.' }
-      format.json { head :no_content }
+    destroy_group = false
+    if params[:force_delete] == 'true'
+      destroy_group = true
+    end
+
+    profile = current_user.profile
+    if profile.jam_groups.all.include?(@jam_group)
+      profile.jam_group_member.delete(JamGroupMember.where(profile: profile).where(jam_group: @jam_group).limit(1))
+      if @jam_group.members.length == 0
+        destroy_group = true
+      end
+    end
+
+    if destroy_group
+      @jam_group.destroy
+      respond_to do |format|
+        format.html { redirect_to jam_groups_url, notice: 'Jam group was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to jam_groups_url, notice: 'Successfully left the Jam group.' }
+        format.json { head :no_content }
+      end
     end
   end
 
