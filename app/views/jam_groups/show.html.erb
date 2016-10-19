@@ -1,0 +1,24 @@
+<div class="container"
+  <p id="notice"><%= notice %></p>
+
+  <p><b>ID:</b> <%= @jam_group.id %></p>
+  <p><b>Name:</b> <%= @jam_group.name %></p>
+  <p><b>Image URL:</b> <%= @jam_group.image_url %></p>
+  <p><b>Created:</b> <%= @jam_group.created_at %></p>
+  <p><b>Updated:</b> <%= @jam_group.updated_at %></p>
+
+  <%= link_to 'Edit', edit_jam_group_path(@jam_group) %> |
+  <%= link_to 'Back', jam_groups_path %>
+
+  <hr>
+
+  <h2>Members</h2>
+
+  <ul>
+    <% if @jam_group.members.each do |member| %>
+      <li><%= member.display_inline %></li>
+    <% end.empty? %>
+      <li>No Members!</li>
+    <% end %>
+  </ul>
+</div>

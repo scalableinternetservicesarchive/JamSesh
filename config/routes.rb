@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
   end
+
+  resources :jam_groups
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

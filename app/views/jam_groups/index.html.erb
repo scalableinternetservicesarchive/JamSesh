@@ -1,0 +1,33 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Jam Groups</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Image URL</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @jam_groups.each do |jam_group| %>
+        <tr>
+          <td><%= jam_group.id %></td>
+          <td><%= jam_group.name %></td>
+          <td><%= jam_group.image_url %></td>
+          <td><%= link_to 'Show', jam_group %></td>
+          <td><%= link_to 'Edit', edit_jam_group_path(jam_group) %></td>
+          <td><%= link_to 'Destroy', jam_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Jam Group', new_jam_group_path %>
+</div>
