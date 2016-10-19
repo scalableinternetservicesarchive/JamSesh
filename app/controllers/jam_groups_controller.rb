@@ -69,6 +69,6 @@ class JamGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def jam_group_params
-      params.require(:jam_group).permit(:name, :image_url)
+      params.require(:jam_group).permit(:name, :image_url, :description)
     end
 end

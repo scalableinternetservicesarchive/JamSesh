@@ -10,6 +10,7 @@ class JamGroup < ApplicationRecord
 
     def set_defaults
       self.name ||= 'Unnamed Group'
-      self.image_url  ||= '/img/headphone.png'
+      self.image_url ||= '/img/headphone.png'
+      self.description ||= 'Insert description here...'
     end
 end

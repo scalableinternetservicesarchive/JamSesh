@@ -7,6 +7,9 @@
   <p><b>Created:</b> <%= @jam_group.created_at %></p>
   <p><b>Updated:</b> <%= @jam_group.updated_at %></p>
 
+  <p><b>Description:</b></p>
+  <p><%= @jam_group.description %></p>
+
   <%= link_to 'Edit', edit_jam_group_path(@jam_group) %> |
   <%= link_to 'Back', jam_groups_path %>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017061651) do
+ActiveRecord::Schema.define(version: 20161019051911) do
 
   create_table "instrument_profiles", force: :cascade do |t|
     t.integer  "instrument_id"
@@ -43,8 +43,9 @@ ActiveRecord::Schema.define(version: 20161017061651) do
   create_table "jam_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "image_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
 
   create_table "profiles", force: :cascade do |t|
