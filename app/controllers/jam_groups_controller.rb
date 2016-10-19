@@ -1,5 +1,7 @@
 class JamGroupsController < ApplicationController
+  protect_from_forgery prepend: true
   before_action :set_jam_group, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /jam_groups
   # GET /jam_groups.json
@@ -28,6 +30,13 @@ class JamGroupsController < ApplicationController
 
     respond_to do |format|
       if @jam_group.save
+        jgm = JamGroupMember.new(
+          profile: current_user.profile, 
+          jam_group: @jam_group, 
+          invited_by: current_user.profile, 
+          status: :joined
+        )
+        jgm.save
         format.html { redirect_to @jam_group, notice: 'Jam group was successfully created.' }
         format.json { render :show, status: :created, location: @jam_group }
       else
