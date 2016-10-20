@@ -3,6 +3,7 @@
 
 <%= form_tag(root_path, :method => "get", id: "search-form") do %>
 Search: 
+<%= text_field_tag :name, params[:name], placeholder: "Find by name" %>
 <%= text_field_tag :location, params[:location], placeholder: "Find by location" %>
 <%= select_tag :age_low, options_for_select((18..99).to_a, params[:age_low]), include_blank: true, prompt: "Min age"%> to 
 <%= select_tag :age_high, options_for_select((18..99).to_a, params[:age_high]), include_blank: true, prompt: "Max age" %>
@@ -18,6 +19,7 @@ Search:
         <th>Location</th>
         <th>Instruments</th>
         <th>Date Joined</th>
+        <th>Profile Link</th>
       </tr>
     </thead>
     <tbody>
@@ -33,6 +35,7 @@ Search:
               <% end %>
             </td>
             <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
+            <td><a href='/profile?id=<%= profile.id %>'>Profile</a></td>
             
           </tr>
         <% end %>
