@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0.1'
@@ -51,4 +52,6 @@ end
 
 group :test do
   gem 'minitest-reporters', '1.1.9'
+  gem 'rspec'
+  gem 'rspec-rails'
 end

@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'rails_helper'
 
 class InstrumentTest < ActiveSupport::TestCase
   # test "the truth" do

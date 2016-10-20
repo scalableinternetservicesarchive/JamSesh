@@ -1,16 +1,16 @@
-require 'test_helper'
+require 'rails_helper'
 
-class ProfileTest < ActiveSupport::TestCase
-  def setup
+RSpec.describe Profile, :type => :model do 
+  before(:each) do
     @profile1 = Profile.new()
     @profile2 = Profile.new(location: "UCSB")
   end
   
-  test "valid user" do
+  it "should validate profiles" do
     assert @profile1.valid?
   end
   
-  test "correct location" do
+  it "should be able to access location" do
     assert @profile2.location == "UCSB"
   end
   
