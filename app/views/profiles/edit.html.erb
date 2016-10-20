@@ -47,24 +47,25 @@
             <tr>
               <th>Instrument</th>
               <th class="proficiency">Proficiency</th>
+              <th class="own-instrument">Do you own this instrument?</th>
+              <th class="actions"></th>
             </tr>
           </thead>
           <tbody>
             <% @profile.instrument_profile.each do |i| %>
               <tr id="i_id-<%= i.instrument.id %>">
+                
                 <td class="table-content instrument">
                   <%= i.instrument.name %>
                 </td>
                 
                 <td class="table-content proficiency">
                   
-                  <div class="show-proficiency">
+                  <div class="showing-instrument">
                     <span class="current-proficiency"><%= i.proficiency %></span>
-                    <button type="button" id="edit-i_id-<%= i.instrument.id %>" class="btn btn-primary edit_instrument">Edit</button>
-                    <button type="button" id="remove-i_id-<%= i.instrument.id %>" class="btn btn-primary remove_instrument">Remove</button>
                   </div>
                   
-                  <div class="update-proficiency hidden">
+                  <div class="editing-instrument hidden">
                     <select id="proficiency-i_id-<%= i.instrument.id%>" class="form-control" style="width: auto; display: inline;">
                       <option value="Newb">Newb</option>
                       <option value="Beginner">Beginner</option>
@@ -75,9 +76,32 @@
                       <option value="Virtuoso">Virtuoso</option>
                     </select>
                     
-                    <button type="button" id="update-i_id-<%= i.instrument.id %>" class="btn btn-primary update_instrument">Update</button>
                   </div>
                 </td>
+                
+                <td class="table-content own-instrument">
+                  <div class="showing-instrument">
+                    <span class="current-own-status"><%= i.owned ? "Yes" : "No" %></span>
+                  </div>
+                  <div class="editing-instrument hidden">
+                    <select id="own-i_id-<%= i.instrument.id %>" class="form-control">
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
+                    </select>
+                  </div>
+                </td>
+                
+                <td class="table-content actions">
+                  <div class="showing-instrument">
+                    <button type="button" id="edit-i_id-<%= i.instrument.id %>" class="btn btn-primary edit_instrument">Edit</button>
+                    <button type="button" id="remove-i_id-<%= i.instrument.id %>" class="btn btn-primary remove_instrument">Remove</button>
+                  </div>
+                  <div class="editing-instrument hidden">
+                    <button type="button" id="update-i_id-<%= i.instrument.id %>" class="btn btn-primary update_instrument">Update</button>
+                    <button type="button" id="cancel-i_id-<%= i.instrument.id %>" class="btn btn-primary cancel_update">Cancel</button>
+                  </div>
+                </td>
+                
               </tr>
             <% end %>
           </tbody>
@@ -87,7 +111,6 @@
                 <select name="instruments" class="form-control">
                   <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
                 </select>
-                <button type="button" class="btn btn-primary" id="add_instrument">+ Add instrument</button>
               </td>
               <td>
                 <select name="proficiency" class="form-control">
@@ -99,6 +122,15 @@
                   <option value="Expert">Expert</option>
                   <option value="Virtuoso">Virtuoso</option>
                 </select>
+              </td>
+              <td class="own-instrument">
+                <select name="owned" class="form-control">
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button type="button" class="btn btn-primary" id="add_instrument">+ Add instrument</button>
               </td>
             </tr>
           </tfoot>
