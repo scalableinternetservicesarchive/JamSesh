@@ -47,8 +47,9 @@ class SpottyApiController < ApplicationController
 		  return
 	  end
 
+	  artists = album.artists.map{|a| a.name}.join(",")
 	  genres = album.artists.first.genres.join(",")
-	  render :json => {name: album.name, genres: genres, release_date: album.release_date, image: album.images[-1]}
+	  render :json => {name: album.name, artists: artists, genres: genres, release_date: album.release_date, image: album.images[-1]}
   end
 
   def top_tracks
