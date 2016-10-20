@@ -1,3 +1,47 @@
 <div class="container">
-  <h1>Hello, World!</h1>
+  <h1>Meet our users!</h1>
+
+<%= form_tag(root_path, :method => "get", id: "search-form") do %>
+Search: 
+<%= text_field_tag :name, params[:name], placeholder: "Find by name" %>
+<%= text_field_tag :location, params[:location], placeholder: "Find by location" %>
+<%= select_tag :age_low, options_for_select((18..99).to_a, params[:age_low]), include_blank: true, prompt: "Min age"%> to 
+<%= select_tag :age_high, options_for_select((18..99).to_a, params[:age_high]), include_blank: true, prompt: "Max age" %>
+<%= select_tag :instrument, options_from_collection_for_select(Instrument.all, :name, :name, params[:instrument]), include_blank: true, prompt: "Instrument" %>
+<%= submit_tag "Go!" %>
+<% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+        <th>Instruments</th>
+        <th>Date Joined</th>
+        <th>Profile Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @profiles.present? %>
+        <% @profiles.each do |profile| %>
+          <tr>
+            <td><%= profile.first_name + ' ' + profile.last_name%></td>
+            <td><%= profile.age %></td>
+            <td><%= profile.location %></td>
+            <td>
+            <% profile.instrument.each do |instrument| %>
+              <%= instrument.name %>
+              <% end %>
+            </td>
+            <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
+            <td><a href='/profile?id=<%= profile.id %>'>Profile</a></td>
+            
+          </tr>
+        <% end %>
+      <% else %>
+      <p>We could not find users matching your search request.</p>
+    <% end %>
+    </tbody>
+  </table>
 </div>
