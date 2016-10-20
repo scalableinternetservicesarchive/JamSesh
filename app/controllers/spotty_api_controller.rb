@@ -50,4 +50,35 @@ class SpottyApiController < ApplicationController
 	  genres = album.artists.first.genres.join(",")
 	  render :json => {name: album.name, genres: genres, release_date: album.release_date, image: album.images[-1]}
   end
+
+  def top_tracks
+	  if params[:artist].nil?
+		  render :text => "Give me an artist"
+		  return
+	  end
+
+	  tracks = Spotty.top_tracks(params[:artist], 1)
+	  if !tracks.is_a?(Array)
+		  render :text => "Bad artist"
+		  return
+	  end
+          tracks = tracks.flatten
+	  render :json => {top_tracks: tracks}
+  end
+
+  def suggest_songs
+	  a1 = params[:a1]
+	  a2 = params[:a2]
+	  if !a1.is_a?(Array) or !a1.is_a?(Array)
+		  render :text => "Bad Params"
+		  return
+	  end
+
+	  # initialize a new instance for dev creds
+	  spotty = Spotty.new()
+	  playlist = spotty.suggest_songs(a1, a2, 1)
+
+	  render :json => {playlist: playlist}
+
+  end
 end
