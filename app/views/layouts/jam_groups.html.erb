@@ -1,0 +1,17 @@
+<% content_for :tabs do -%>
+<div class="container">
+  <h1 class="title">Jam Groups</h1>
+  <br/>
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" <% if yield(:page) == 'index' %>class="active"<% end %>>
+      <%= link_to 'My Jam Groups', jam_groups_url %>
+    </li>
+    <li role="presentation" <% if yield(:page) == 'invitations' %>class="active"<% end %>>
+      <%= link_to 'Jam Invitations', jam_groups_url %>
+    </li>
+  </ul>
+  <br/>
+</div>
+<% end -%>
+
+<%= render :file => "layouts/application" %>

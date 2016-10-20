@@ -11,6 +11,7 @@ class JamGroupsController < ApplicationController
     else
       @jam_groups = current_user.profile.jam_groups.all
     end
+    render(:layout => 'layouts/jam_groups')
   end
 
   # GET /jam_groups/1
