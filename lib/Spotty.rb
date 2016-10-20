@@ -77,13 +77,13 @@ class Spotty
 
 
 	# takes an artist string or class and returns top tracks as an array of strings or array of tracks
-	def top_tracks(artist, str=0)
+	def self.top_tracks(artist, str=0)
 		if artist.is_a?(String)
 			artist_obj = Spotty.search_artist(artist)
-			if artist_obj.is_nil?
+			if artist_obj.nil?
 				return -1
 			end
-			top_tracks = artist_obj.top_tacks(:US)
+			top_tracks = artist_obj.top_tracks(:US)
 
 		elsif artist.is_a?(RSpotify::Artist)
 			top_tracks = artist.top_tracks(:US)
@@ -140,10 +140,18 @@ class Spotty
 			artist_l2.each do |o_pair|
 				match = pair.genres & o_pair.genres
 				unless match.empty?
-					in_common.push(pair, o_pair)
+					in_common.push(pair) unless in_common.include?(pair)
+					in_common.push(o_pair) unless in_common.include?(o_pair)
+
 				end
 			end
 		end
+
+		if in_common.size() == 0
+			return -3
+		end
+	
+		in_common.each{|t| puts t.name}
 
 		recommendations = RSpotify::Recommendations.generate(seed_artists: in_common.map(&:id))
 		tracks = recommendations.tracks
