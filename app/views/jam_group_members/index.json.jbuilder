@@ -1,0 +1,1 @@
+json.array! @jam_group_members, partial: 'jam_group_members/jam_group_member', as: :jam_group_member
