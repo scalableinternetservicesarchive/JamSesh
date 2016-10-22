@@ -20,6 +20,7 @@ require 'rails_helper'
 
 RSpec.describe JamGroupMembersController, type: :controller do
   fixtures :all
+  login_user
 
   # This should return the minimal set of attributes required to create a valid
   # JamGroupMember. As you add validations to JamGroupMember, be sure to

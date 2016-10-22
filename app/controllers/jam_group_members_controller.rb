@@ -1,5 +1,6 @@
 class JamGroupMembersController < ApplicationController
   before_action :set_jam_group_member, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /jam_group_members
   # GET /jam_group_members.json
