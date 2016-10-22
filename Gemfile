@@ -54,4 +54,7 @@ group :test do
   gem 'minitest-reporters', '1.1.9'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end

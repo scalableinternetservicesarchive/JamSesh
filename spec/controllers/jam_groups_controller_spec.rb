@@ -6,7 +6,7 @@ RSpec.describe JamGroupsController, type: :controller do
   login_user
 
   before(:each) do
-    @jam_group = jam_groups(:one)
+    @jam_group = FactoryGirl.create(:jam_group)
   end
 
   it "should get index" do
@@ -21,7 +21,7 @@ RSpec.describe JamGroupsController, type: :controller do
 
   it "should create jam_group" do
     count = JamGroup.count
-    post :create, params: { jam_group: {name: 'Name', image_url:'', description: ''} }
+    post :create, params: { jam_group: FactoryGirl.attributes_for(:jam_group) }
     expect(JamGroup.count).to be(count + 1)
 
     expect(response).to redirect_to(jam_group_url(JamGroup.last))
@@ -38,7 +38,7 @@ RSpec.describe JamGroupsController, type: :controller do
   end
 
   it "should update jam_group" do
-    patch :update, params: { id: @jam_group.id, jam_group: {name: 'Name', image_url:'', description: ''} } 
+    patch :update, params: { id: @jam_group.id, jam_group: FactoryGirl.attributes_for(:jam_group) }
 
     expect(response).to redirect_to(jam_group_url(@jam_group))
   end
