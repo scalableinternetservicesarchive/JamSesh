@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   end
 
   resources :jam_groups
-  resources :jam_group_members
+  get 'jam_group_members/list_pending' => 'jam_group_members#list_pending'
+  resources :jam_group_members do
+    post 'accept_invite' => 'jam_group_members#accept_invite'
+    post 'reject_invite' => 'jam_group_members#reject_invite'
+  end
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

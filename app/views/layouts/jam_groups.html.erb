@@ -7,7 +7,7 @@
       <%= link_to 'My Jam Groups', jam_groups_url %>
     </li>
     <li role="presentation" <% if yield(:page) == 'invitations' %>class="active"<% end %>>
-      <%= link_to 'Jam Invitations', jam_groups_url %>
+      <%= link_to 'Jam Invitations', jam_group_members_list_pending_path %>
     </li>
   </ul>
   <br/>

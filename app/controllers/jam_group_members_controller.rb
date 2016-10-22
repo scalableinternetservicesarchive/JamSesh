@@ -1,11 +1,38 @@
 class JamGroupMembersController < ApplicationController
-  before_action :set_jam_group_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_jam_group_member, only: [:accept_invite, :reject_invite, :show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  layout :resolve_layout
 
   # GET /jam_group_members
   # GET /jam_group_members.json
   def index
     @jam_group_members = JamGroupMember.all
+  end
+
+  def list_pending
+    @invites = JamGroupMember.where(profile: current_user.profile).where(status: :pending).all
+    render "list_invites"
+  end
+
+  def accept_invite
+    @jam_group_member.status = :joined 
+    @jam_group_member.save
+
+    respond_to do |format|
+      format.html { redirect_to jam_group_path(@jam_group_member.jam_group), notice: "Joined Jam Group '#{@jam_group_member.jam_group.name}'" }
+      format.json { render status: :ok }
+    end
+  end
+
+  def reject_invite
+    @jam_group_member.status = :rejected 
+    @jam_group_member.save
+
+    respond_to do |format|
+      format.html { redirect_to jam_group_members_list_pending_path, notice: "Rejected Jam Group invitation for '#{@jam_group_member.jam_group.name}'" }
+      format.html { redirect_to jam_group_path(@jam_group_member.jam_group), notice: "Rejected Jam Group invitation for '#{@jam_group_member.jam_group.name}'" }
+      format.json { render status: :ok }
+    end
   end
 
   # GET /jam_group_members/1
@@ -78,11 +105,25 @@ class JamGroupMembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_jam_group_member
-      @jam_group_member = JamGroupMember.find(params[:id])
+      if params[:id] != nil
+        @jam_group_member = JamGroupMember.find(params[:id])
+      elsif params[:jam_group_member_id] != nil
+        @jam_group_member = JamGroupMember.find(params[:jam_group_member_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def jam_group_member_params
       params.require(:jam_group_member).permit(:jam_group, :profile, :invited_by)
+    end
+
+
+    def resolve_layout
+      case action_name
+      when "list_pending"
+        "jam_groups"
+      else
+        "application"
+      end
     end
 end

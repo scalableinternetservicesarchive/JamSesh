@@ -2,6 +2,7 @@ class JamGroupsController < ApplicationController
   protect_from_forgery prepend: true
   before_action :set_jam_group, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  layout :resolve_layout
 
   # GET /jam_groups
   # GET /jam_groups.json
@@ -9,9 +10,9 @@ class JamGroupsController < ApplicationController
     if params[:all] == 'true'
       @jam_groups = JamGroup.all
     else
-      @jam_groups = current_user.profile.jam_groups.all
+      members = JamGroupMember.where(profile: current_user.profile).where(status: :joined).all
+      @jam_groups = members.map {|m| m.jam_group}
     end
-    render(:layout => 'layouts/jam_groups')
   end
 
   # GET /jam_groups/1
@@ -104,5 +105,14 @@ class JamGroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def jam_group_params
       params.require(:jam_group).permit(:name, :image_url, :description)
+    end
+
+    def resolve_layout
+      case action_name
+      when "index"
+        "jam_groups"
+      else
+        "application"
+      end
     end
 end
