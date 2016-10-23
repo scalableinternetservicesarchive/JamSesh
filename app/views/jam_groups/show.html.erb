@@ -1,28 +1,62 @@
-<div class="container"
-  <p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="page-header row">
+    <div class="col-md-1 col-sm-2 col-xs-2">
+      <img class="media-object responsive-image" src="<%= @jam_group.image_url %>" alt="<%= @jam_group.name %> Image" height="80" width="80">
+    </div>
+    <div class="col-md-10 col-sm-8 col-xs-8">
+      <h1><%= @jam_group.name %></h1>
+      <p><small>Last Updated: <%= @jam_group.updated_at %></small></p>
+    </div>
+    <div class="col-md-1 col-sm-2 col-xs-2">
+      <br/>
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><%= link_to 'Edit Group Info', edit_jam_group_path(@jam_group) %></li>
+          <li><%= link_to 'Leave this group', @jam_group, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+          <li role="separator" class="divider"></li>
+          <li class="text-danger"><%= link_to 'Delete this group', jam_group_path(@jam_group, force_delete: 'true'), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-danger" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-  <p><b>ID:</b> <%= @jam_group.id %></p>
-  <p><b>Name:</b> <%= @jam_group.name %></p>
-  <p><b>Image URL:</b> <%= @jam_group.image_url %></p>
-  <p><b>Created:</b> <%= @jam_group.created_at %></p>
-  <p><b>Updated:</b> <%= @jam_group.updated_at %></p>
+  <div class="row">
+    <div class="col-sm-7">
+      <h3>Description:</h3>
+      <p><%= @jam_group.description %></p>
+      <hr>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Members <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add Member</a></div>
 
-  <p><b>Description:</b></p>
-  <p><%= @jam_group.description %></p>
-
-  <%= link_to 'Edit', edit_jam_group_path(@jam_group) %> |
-  <%= link_to 'Back', jam_groups_path %> |
-  <%= link_to 'Destroy', @jam_group, method: :delete, data: { confirm: 'Are you sure?' }, class: "text-danger" %>
-
-  <hr>
-
-  <h2>Members</h2>
-
-  <ul>
-    <% if @jam_group.members.each do |member| %>
-      <li><%= member.display_inline %></li>
-    <% end.empty? %>
-      <li>No Members!</li>
-    <% end %>
-  </ul>
+        <div class="list-group">
+          <% if @jam_group.jam_group_members.each do |member| %>
+            <%= link_to profile_path(member.profile), class: "list-group-item" do %>
+              <div class="media">
+                <div class="media-left">
+                  <%= gravatar_for member.profile.user, clazz: "media-object" %>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading"><%= member.profile.full_name %></h4>
+                  <p>
+                    <% if member.status.capitalize == "Pending" %>
+                      Pending since
+                    <% else %>
+                      <%= member.status.capitalize %>
+                    <% end %> <%= member.updated_at %></p>
+                </div>
+              </div>
+            <% end %>
+          <% end.empty? %>
+            <li>No Members!</li>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
