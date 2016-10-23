@@ -5,7 +5,11 @@ class Profile < ApplicationRecord
     has_many :jam_groups, through: :jam_group_member
     belongs_to :user
 
+    def full_name
+      "#{self.first_name} #{self.last_name}"
+    end
+
     def display_inline
-      "#{self.first_name} #{self.last_name} (#{self.user.email})"
+      "#{self.full_name} (#{self.user.email})"
     end
 end

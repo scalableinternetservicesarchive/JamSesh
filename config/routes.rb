@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root "application#home"
   devise_for :users
   
-  resource :profile do
+  resources :profiles do
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
   end
