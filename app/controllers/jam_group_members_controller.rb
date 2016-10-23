@@ -55,24 +55,26 @@ class JamGroupMembersController < ApplicationController
     #@jam_group_member = JamGroupMember.new(jam_group_member_params)
     if params[:jam_group] != nil && params[:profile] != nil
       @jam_group_member = JamGroupMember.new(profile_id: params[:profile], jam_group_id: params[:jam_group])
-      if params[:invited_by] != nil
-        @jam_group_member.invited_by = params[:invited_by]
-      else
-        @jam_group_member.invited_by = params[:profile]
-      end
+      @jam_group_member.invited_by = current_user.profile
+
+      #if params[:invited_by] != nil
+      #  @jam_group_member.invited_by = params[:invited_by]
+      #else
+      #  @jam_group_member.invited_by = params[:profile]
+      #end
 
       respond_to do |format|
         if @jam_group_member.save
-          format.html { redirect_to @jam_group_member, notice: 'Jam group member was successfully created.' }
+          format.html { redirect_to JamGroup.find(params[:jam_group]), notice: 'Jam group member was successfully invited.' }
           format.json { render :show, status: :created, location: @jam_group_member }
         else
-          format.html { render :new }
+          format.html { redirect_to JamGroup.find(params[:jam_group]) }
           format.json { render json: @jam_group_member.errors, status: :unprocessable_entity }
         end
       end
     else
       respond_to do |format|
-        format.html { render :new }
+        format.html { redirect_to jam_groups_url }
         format.json { render json: {error: "Invalid Request"}, status: :unprocessable_entity }
       end
     end

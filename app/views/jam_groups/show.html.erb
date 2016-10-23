@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-10 col-sm-8 col-xs-8">
       <h1><%= @jam_group.name %></h1>
-      <p><small>Last Updated: <%= @jam_group.updated_at %></small></p>
+      <p><small><b>Last Updated:</b> <%= @jam_group.updated_at %></small></p>
     </div>
     <div class="col-md-1 col-sm-2 col-xs-2">
       <br/>
@@ -32,7 +32,26 @@
     <div class="col-sm-1"></div>
     <div class="col-sm-4">
       <div class="panel panel-default">
-        <div class="panel-heading">Members <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"></span> Add Member</a></div>
+        <div class="panel-heading">
+          Members 
+        </div>
+
+        <div class="panel-body row">
+          <div class="col-xs-5"><p>Add a Member:</p></div>
+          <div class="col-xs-7">
+            <div class="input-group">
+              <select class="form-control" id="add-member-dropdown">
+                <option value="-1" disabled selected>Select a User</option>
+                <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
+                  <option value="<%= profile.id %>"><%= profile.display_inline %></option>
+                <% end %>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
+              </span>
+            </div>
+          </div>
+        </div>
 
         <div class="list-group">
           <% if @jam_group.jam_group_members.each do |member| %>

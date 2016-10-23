@@ -73,8 +73,8 @@ RSpec.describe JamGroupMembersController, type: :controller do
       it "redirects to the created jam_group_member" do
         jam_group = FactoryGirl.create(:jam_group)
         profile = FactoryGirl.create(:profile)
-        post :create, params: {jam_group_member: {profile: profile.id, jam_group: jam_group.id, invited_by: profile.id}}, session: valid_session
-        expect(response).to have_http_status(:ok)
+        post :create, params: {profile: profile.id, jam_group: jam_group.id}, session: valid_session
+        expect(response).to redirect_to(jam_group)
       end
     end
 
