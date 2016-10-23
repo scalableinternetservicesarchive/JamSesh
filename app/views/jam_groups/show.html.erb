@@ -36,19 +36,24 @@
           Members 
         </div>
 
-        <div class="panel-body row">
-          <div class="col-xs-5"><p>Add a Member:</p></div>
-          <div class="col-xs-7">
-            <div class="input-group">
-              <select class="form-control" id="add-member-dropdown">
-                <option value="-1" disabled selected>Select a User</option>
-                <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
-                  <option value="<%= profile.id %>"><%= profile.display_inline %></option>
-                <% end %>
-              </select>
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
-              </span>
+        <div class="panel-body">
+          <div class="row hidden" id="add-member-warning">
+            <div class="col-xs-12"><p class="text-danger">* Select a user first!</p></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-5"><p>Add a Member:</p></div>
+            <div class="col-xs-7">
+              <div class="input-group">
+                <select class="form-control" id="add-member-dropdown">
+                  <option value="-1" disabled selected>Select a User</option>
+                  <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
+                    <option value="<%= profile.id %>"><%= profile.display_inline %></option>
+                  <% end %>
+                </select>
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
+                </span>
+              </div>
             </div>
           </div>
         </div>
