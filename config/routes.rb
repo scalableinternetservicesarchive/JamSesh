@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
+  get 'spotty_api/song'
+
+  get 'spotty_api/artist'
+
+  get 'spotty_api/album'
+
+  get 'spotty_api/top_tracks'
+
+  get 'spotty_api/suggest_songs'
+
   root "application#home"
   devise_for :users
   
   resources :profiles do
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
+    delete 'removeInstrument' => 'profiles#removeInstrument'
   end
 
   resources :jam_groups

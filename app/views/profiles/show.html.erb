@@ -10,6 +10,7 @@
       <tr>
         <th>Instrument Type</th>
         <th>Proficiency</th>
+        <th>Possession</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,9 @@
           </td>
           <td class="show-proficiency">
             <%= i.proficiency %>
+          </td>
+          <td class="show-own-status">
+            <%= i.owned ? "I own this instrument" : "I do not own this instrument" %>
           </td>
         </tr>
       <% end.empty? %>

@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019051911) do
+ActiveRecord::Schema.define(version: 20161020204631) do
 
   create_table "instrument_profiles", force: :cascade do |t|
     t.integer  "instrument_id"
     t.integer  "profile_id"
     t.string   "proficiency"
     t.integer  "years"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "owned",         default: false
     t.index ["instrument_id"], name: "index_instrument_profiles_on_instrument_id"
     t.index ["profile_id"], name: "index_instrument_profiles_on_profile_id"
   end
