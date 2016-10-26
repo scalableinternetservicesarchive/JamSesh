@@ -22,12 +22,16 @@ class ProfilesController < ApplicationController
   end
 
   def addInstrument
-    if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil
+    if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil && params[:owned] != nil
       @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
       if @instrument_profile == nil
-        @instrument_profile = InstrumentProfile.create(:instrument_id => params[:instrument], :profile_id => params[:profile], :proficiency => params[:proficiency])
+        @instrument_profile = InstrumentProfile.create(:instrument_id => params[:instrument],
+                                                        :profile_id => params[:profile], 
+                                                        :proficiency => params[:proficiency],
+                                                        :owned => params[:owned])
       else
         @instrument_profile.proficiency = params[:proficiency]
+        @instrument_profile.owned = params[:owned]
         @instrument_profile.save
       end
     end
