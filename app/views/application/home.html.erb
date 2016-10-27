@@ -35,7 +35,7 @@ Search:
               <% end %>
             </td>
             <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
-            <td><a href='/profile?id=<%= profile.id %>'>Profile</a></td>
+            <td><%= link_to 'Profile', profile %></td>
             
           </tr>
         <% end %>
