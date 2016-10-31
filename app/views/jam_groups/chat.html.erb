@@ -2,4 +2,9 @@
 <%= render :layout => 'jam_groups/show' do %>
   <h3>Chat:</h3>
   <p>TODO</p>
+  <ul>
+    <% @jam_group.comments.each do |comment| %>
+      <li><%= comment %></li>
+    <% end %>
+  </ul>
 <% end %>

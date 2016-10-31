@@ -1,6 +1,7 @@
 class JamGroup < ApplicationRecord
   has_many :jam_group_members, :dependent => :destroy
   has_many :profiles, through: :jam_group_members
+  has_many :comments, :dependent => :destroy
   alias_attribute :members, :profiles
 
   after_initialize :set_defaults, unless: :persisted?
