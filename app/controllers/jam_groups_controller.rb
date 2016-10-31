@@ -1,6 +1,6 @@
 class JamGroupsController < ApplicationController
   protect_from_forgery prepend: true
-  before_action :set_jam_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_jam_group, only: [:show, :chat, :edit, :update, :destroy]
   before_action :authenticate_user!
   layout :resolve_layout
 
@@ -18,6 +18,9 @@ class JamGroupsController < ApplicationController
   # GET /jam_groups/1
   # GET /jam_groups/1.json
   def show
+  end
+
+  def chat
   end
 
   # GET /jam_groups/new

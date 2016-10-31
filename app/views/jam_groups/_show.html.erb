@@ -26,8 +26,8 @@
   <div class="row">
     <div class="col-sm-7">
       <ul class="nav nav-tabs">
-        <li role="presentation" <% if yield(:page) == 'info' %>class="active"<% end %> ><a href="#">Info</a></li>
-        <li role="presentation" <% if yield(:page) == 'chat' %>class="active"<% end %> ><a href="#">Chat</a></li>
+        <li role="presentation" <% if yield(:page) == 'info' %>class="active"<% end %> ><%= link_to 'Info', @jam_group %></li>
+        <li role="presentation" <% if yield(:page) == 'chat' %>class="active"<% end %> ><%= link_to 'Chat', jam_group_chat_url(@jam_group) %></li>
       </ul>
       <%= yield %>
       <hr>
