@@ -12,10 +12,17 @@ Rails.application.routes.draw do
   root "application#home"
   devise_for :users
   
-  resource :profile do
+  resources :profiles do
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
     delete 'removeInstrument' => 'profiles#removeInstrument'
+  end
+
+  resources :jam_groups
+  get 'jam_group_members/list_pending' => 'jam_group_members#list_pending'
+  resources :jam_group_members do
+    post 'accept_invite' => 'jam_group_members#accept_invite'
+    post 'reject_invite' => 'jam_group_members#reject_invite'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

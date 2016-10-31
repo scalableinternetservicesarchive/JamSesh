@@ -30,6 +30,25 @@ ActiveRecord::Schema.define(version: 20161020204631) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "jam_group_members", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "jam_group_id"
+    t.integer  "status",       default: 0
+    t.integer  "invited_by"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["jam_group_id"], name: "index_jam_group_members_on_jam_group_id"
+    t.index ["profile_id"], name: "index_jam_group_members_on_profile_id"
+  end
+
+  create_table "jam_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string   "location"
     t.datetime "created_at",                       null: false

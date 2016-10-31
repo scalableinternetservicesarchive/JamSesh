@@ -1,0 +1,37 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Jam Group Members</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>JamGroup</th>
+        <th>Status</th>
+        <th>Invited By</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @jam_group_members.each do |jam_group_member| %>
+        <tr>
+          <td><%= jam_group_member.id %></td>
+          <td><%= jam_group_member.profile.display_inline %></td>
+          <td><%= jam_group_member.jam_group.name %></td>
+          <td><%= jam_group_member.status %></td>
+          <td><%= jam_group_member.invited_by.display_inline %></td>
+          <td><%= link_to 'Show', jam_group_member %></td>
+          <td><%= link_to 'Edit', edit_jam_group_member_path(jam_group_member) %></td>
+          <td><%= link_to 'Destroy', jam_group_member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Jam Group Member', new_jam_group_member_path %>
+</div>

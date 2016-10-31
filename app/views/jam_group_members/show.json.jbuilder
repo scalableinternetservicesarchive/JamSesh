@@ -1,0 +1,1 @@
+json.partial! "jam_group_members/jam_group_member", jam_group_member: @jam_group_member
