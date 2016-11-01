@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+  
   $(document).on('click','#add_instrument', function() {    
     var instrument_id = $("[name='instruments']")[0].value;
     var proficiency = $("[name='proficiency']")[0].value;
@@ -38,6 +38,8 @@ $(document).ready(function(){
     removeInstrument(instrument_id);
   });
 
+  console.log("ciao");
+  $("[data-tags]").tagsInput();
 })
 
 function addInstrument(instrument_id, proficiency, owned) {

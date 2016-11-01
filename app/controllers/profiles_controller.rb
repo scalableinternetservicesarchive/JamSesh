@@ -9,9 +9,17 @@ class ProfilesController < ApplicationController
   end
   
   def update
-    if @profile.update_attributes(profile_params)
-      flash[:success] = "Profile updated"
-      redirect_to @profile
+    artists = profile_params[:artists_list].split(",").map do |artist_name|
+      artist_name.strip!
+      Artist.where(name: artist_name).first_or_create do |artist|
+        #artist.spotify_id = Spotty.get_spotyify_id(artist_name)
+      end
+    end
+    @profile.assign_attributes(profile_params)
+    @profile.artists = artists
+    if @profile.save
+      flash[:notice] = "Profile updated"
+      redirect_to edit_profile_path(@profile)
     else
       render 'edit'
     end
@@ -61,10 +69,11 @@ class ProfilesController < ApplicationController
     else
       @profile = Profile.find_by user_id: current_user.id
     end
+    @profile.artists_list = @profile.artists.map(&:name).join(", ")
   end
 
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :age, :bio, :phone, :location, instrument_ids: [])
+    params.require(:profile).permit(:first_name, :last_name, :age, :bio, :phone, :location, :artists_list, instrument_ids: [])
   end
   
 end
