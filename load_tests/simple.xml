@@ -14,8 +14,20 @@
 
 
   <load>
-    <arrivalphase phase="1" duration="10" unit="second">
+    <arrivalphase phase="1" duration="5" unit="second">
       <users arrivalrate="1" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="5" unit="second">
+      <users arrivalrate="2" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="5" unit="second">
+      <users arrivalrate="3" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="5" unit="second"></users>
     </arrivalphase>
   </load>
 
@@ -34,9 +46,17 @@
       	<http url='/' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
+      <dyn_variable name="authenticity_token"></dyn_variable>
       <request>
-        <http url='/login' version='1.1' method='POST'
-            contents="user=foo"></http>
+        <http url='/users/sign_up' version='1.1' method='GET'></http>
+      </request>
+      <setdynvars sourcetype="random_number" start="1" end="1000000">
+        <var name="rndint" />
+      </setdynvars>
+      <request>
+        <http url='/users/sign_up' version='1.1' method='POST'
+            contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=user%%_random_number%%%40gmail.com&amp;user%5Bpassword%5D=password&amp;user%5Bpassword_confirmation%5D=password"
+            content_type="application/x-www-form-urlencoded"></http>
       </request>
     </session>
   </sessions>
