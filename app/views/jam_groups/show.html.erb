@@ -62,22 +62,27 @@
                   <!-- Begin modal body --> 
                   <div class="modal-body" style='padding: 0'>
                     <div class="list-group" style='margin-bottom: 0;'>
-                      <% if Profile.all.each do |profile| %>
-                        <%= link_to profile_path(profile), class: "list-group-item" do %>
+                      <% if (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
+                       <div class="list-group-item">
                           <div class="media">
                             <div class="media-left">
-                              <%= gravatar_for profile.user, clazz: "media-object" %>
+                              <%= gravatar_for profile.user, class: "media-object" %>
                             </div>
                             <div class="media-body">
+                              <%= link_to profile_path(profile), target: "_blank" do %>
                               <h4 class="media-heading"><%= profile.full_name %></h4>
+                              <% end %>
                               <h4 class="media-heading">Location: <%= profile.location %></h4>
                               <h4 class="media-heading">Age: <%= profile.age %></h4>
                             </div>
-                            <div class="media-right"><button type="submit" class="btn btn-med btn-info" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Invite</button></div>
+                            <div class="media-right">
+                              <%= button_to "Invite!", { controller: 'jam_group_members', action: 'create'}, remote: true, params: { profile: profile.id, jam_group: @jam_group.id }, class: 'btn btn-primary btn-med'  %>
+                            </div>
                           </div>
-                        <% end %>
+                        </div>
+
                       <% end.empty? %>
-                        <li>No users!</li>
+                        <li> No users to show!(</li>
                       <% end %>
                     </div>
                   </div>
@@ -101,7 +106,7 @@
             <%= link_to profile_path(member.profile), class: "list-group-item" do %>
               <div class="media">
                 <div class="media-left">
-                  <%= gravatar_for member.profile.user, clazz: "media-object" %>
+                  <%= gravatar_for member.profile.user, class: "media-object" %>
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading"><%= member.profile.full_name %></h4>
@@ -122,19 +127,3 @@
     </div>
   </div>
 </div>
-
-
-            <div class="col-xs-5"><p>Add a Member:</p></div>
-            <div class="col-xs-7">
-              <div class="input-group">
-                <select class="form-control" id="add-member-dropdown">
-                  <option value="-1" disabled selected>Select a User</option>
-                  <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
-                    <option value="<%= profile.id %>"><%= profile.display_inline %></option>
-                  <% end %>
-                </select>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
-                </span>
-              </div>
-            </div>
