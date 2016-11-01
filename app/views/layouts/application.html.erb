@@ -34,5 +34,10 @@
       <%= yield %>
     </div>
 
+    <%= javascript_tag do %>
+       $(function() {
+          $("time.timeago").timeago();
+       });
+    <% end %>
   </body>
 </html>

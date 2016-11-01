@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     delete 'removeInstrument' => 'profiles#removeInstrument'
   end
 
+  get 'jam_groups/:id/chat' => 'jam_groups#chat', as: 'jam_group_chat' 
+  post 'jam_groups/:id/chat' => 'jam_groups#chat', as: 'jam_group_comment' 
   resources :jam_groups
   get 'jam_group_members/list_pending' => 'jam_group_members#list_pending'
   resources :jam_group_members do
