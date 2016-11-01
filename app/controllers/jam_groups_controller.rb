@@ -21,6 +21,23 @@ class JamGroupsController < ApplicationController
   end
 
   def chat
+    if request.post?
+      @comment = @jam_group.comments.new(new_comment_params)
+      @comment.profile = current_user.profile
+      
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to jam_group_chat_path(@jam_group), notice: 'Successfully added comment' }
+          format.json { render :chat, status: :created, location: jam_group_chat_path(@jam_group) }
+        else
+          format.html { redirect_to jam_group_chat_path(@jam_group), alert: 'Failed to add comment' }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @comment = @jam_group.comments.new
+      @comment.profile = current_user.profile
+    end
   end
 
   # GET /jam_groups/new
@@ -108,6 +125,10 @@ class JamGroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def jam_group_params
       params.require(:jam_group).permit(:name, :image_url, :description)
+    end
+
+    def new_comment_params
+      params.require(:comment).permit(:title, :comment)
     end
 
     def resolve_layout

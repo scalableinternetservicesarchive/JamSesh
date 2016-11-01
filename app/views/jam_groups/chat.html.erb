@@ -2,9 +2,14 @@
 <%= render :layout => 'jam_groups/show' do %>
   <h3>Chat:</h3>
   <p>TODO</p>
+  <%= form_for @comment, url: {action: "chat"} do |f| %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+    <%= f.text_area :comment, class: "form-control", placeholder: "Comment" %>
+    <%= f.submit "Add Comment", class: "btn btn-primary" %>
+  <% end %>
   <ul>
-    <% @jam_group.comments.each do |comment| %>
-      <li><%= comment %></li>
+    <% @jam_group.comments.order('created_at DESC').each do |comment| %>
+      <li><b><%= comment.profile.full_name %></b>: <%= comment.comment %> (<%= timeago(comment.created_at) %>)</li>
     <% end %>
   </ul>
 <% end %>
