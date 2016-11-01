@@ -3,7 +3,6 @@
   <h3>Chat:</h3>
   <p>TODO</p>
   <%= form_for @comment, url: {action: "chat"} do |f| %>
-    <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
     <%= f.text_area :comment, class: "form-control", placeholder: "Comment" %>
     <%= f.submit "Add Comment", class: "btn btn-primary" %>
   <% end %>
