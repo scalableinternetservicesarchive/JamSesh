@@ -26,6 +26,7 @@ class JamGroupsController < ApplicationController
   end
 
   def chat
+    self.show
     if request.post?
       @comment = @jam_group.comments.new(new_comment_params)
       @comment.profile = current_user.profile
