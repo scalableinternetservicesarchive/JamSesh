@@ -1,0 +1,22 @@
+<% provide(:page, 'edit_contact') %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+
+      <span style="display: none;" id="profile_id"><%= @profile.id %></span>
+      
+      <p>Your email and phone number will be displayed only to users who you are in a Jam Group with.</p>
+
+      <%= form_for @profile do |f| %>
+        <div class="form-group">
+          <%= f.label :phone %><br>
+          <%= f.telephone_field :phone, class: "form-control" %>
+        </div>
+
+        <%= f.submit "Update", class: "btn btn-primary form-control" %>
+      <% end %>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</div>

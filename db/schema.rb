@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020204631) do
+ActiveRecord::Schema.define(version: 20161101005957) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "comment"
+    t.integer  "jam_group_id"
+    t.integer  "profile_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["jam_group_id"], name: "index_comments_on_jam_group_id"
+    t.index ["profile_id"], name: "index_comments_on_profile_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.string   "friendable_type"
+    t.integer  "friendable_id"
+    t.integer  "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "blocker_id"
+    t.integer  "status"
+  end
 
   create_table "instrument_profiles", force: :cascade do |t|
     t.integer  "instrument_id"

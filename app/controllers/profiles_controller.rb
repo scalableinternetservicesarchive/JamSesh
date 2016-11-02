@@ -1,11 +1,15 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_profile, only: [:show, :edit, :update, :destroy, :getInstruments, :addInstrument, :removeInstrument]
+  before_action :set_profile, only: [:show, :edit_profile, :edit_contact, :update, :destroy, :getInstruments, :addInstrument, :removeInstrument]
+  layout :resolve_layout
   
   def show
   end
   
-  def edit
+  def edit_profile
+  end
+  
+  def edit_contact
   end
   
   def update
@@ -65,6 +69,17 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:first_name, :last_name, :age, :bio, :phone, :location, instrument_ids: [])
+  end
+  
+  def resolve_layout
+    case action_name
+    when "edit_profile"
+      "profiles"
+    when "edit_contact"
+      "profiles"
+    else
+      "application"
+    end
   end
   
 end

@@ -13,6 +13,7 @@ class Profile < ApplicationRecord
     has_many :instrument, through: :instrument_profile
     has_many :jam_group_member, :dependent => :destroy
     has_many :jam_groups, through: :jam_group_member
+    has_many :comments, :dependent => :destroy
     belongs_to :user
 
     def full_name

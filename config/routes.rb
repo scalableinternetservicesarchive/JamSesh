@@ -12,12 +12,18 @@ Rails.application.routes.draw do
   root "application#home"
   devise_for :users
   
+  # get 'profiles/edit_public' => 'profiles#edit_public'
+  # get 'profiles/edit_private' => 'profiles#edit_private'
   resources :profiles do
+    get 'edit_profile' => 'profiles#edit_profile'
+    get 'edit_contact' => 'profiles#edit_contact'
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
     delete 'removeInstrument' => 'profiles#removeInstrument'
   end
 
+  get 'jam_groups/:id/chat' => 'jam_groups#chat', as: 'jam_group_chat' 
+  post 'jam_groups/:id/chat' => 'jam_groups#chat', as: 'jam_group_comment' 
   resources :jam_groups
   get 'jam_group_members/list_pending' => 'jam_group_members#list_pending'
   resources :jam_group_members do
