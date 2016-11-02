@@ -61,8 +61,13 @@
                   
                   <!-- Begin modal body --> 
                   <div class="modal-body" style='padding: 0'>
+                    <%= form_tag(jam_group_path, :method => "get", id: "search-form", style: 'margin: 10px') do %>
+                    <%= text_field_tag :name, params[:name], placeholder: "Find by name" %>
+                    <%= text_field_tag :location, params[:location], placeholder: "Find by location" %>
+                    <%= submit_tag "Go!" %>
+                    <% end %>
                     <div class="list-group" style='margin-bottom: 0;'>
-                      <% if (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
+                      <% if @nonmembers.each do |profile| %>
                        <div class="list-group-item">
                           <div class="media">
                             <div class="media-left">
@@ -82,7 +87,7 @@
                         </div>
 
                       <% end.empty? %>
-                        <li> No users to show!(</li>
+                        <li> Couldn't find any users!</li>
                       <% end %>
                     </div>
                   </div>
@@ -127,3 +132,25 @@
     </div>
   </div>
 </div>
+
+<script>
+function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
+  if ($_GET('location') != null || $_GET('name') != null) {
+    console.log(location)
+    $('#searchModal').modal('show');
+  }
+</script>

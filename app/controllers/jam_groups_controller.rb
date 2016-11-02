@@ -18,6 +18,11 @@ class JamGroupsController < ApplicationController
   # GET /jam_groups/1
   # GET /jam_groups/1.json
   def show
+    excluded_profile_ids = @jam_group.members.select(:id)
+    @nonmembers = Profile.where.not(id: excluded_profile_ids)
+    @nonmembers = @nonmembers.by_name(params[:name]) if params[:name].present?
+    @nonmembers = @nonmembers.by_location(params[:location]) if params[:location].present?
+    @nonmembers = @nonmembers.first(6)
   end
 
   # GET /jam_groups/new
