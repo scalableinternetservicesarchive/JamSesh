@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 20161101005957) do
     t.index ["profile_id"], name: "index_comments_on_profile_id"
   end
 
+  create_table "friendships", force: :cascade do |t|
+    t.string   "friendable_type"
+    t.integer  "friendable_id"
+    t.integer  "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "blocker_id"
+    t.integer  "status"
+  end
+
   create_table "instrument_profiles", force: :cascade do |t|
     t.integer  "instrument_id"
     t.integer  "profile_id"

@@ -50,20 +50,65 @@
               <div class="col-xs-12"><p class="text-danger">* Select a user first!</p></div>
             </div>
             <div class="row">
-              <div class="col-xs-5"><p>Add a Member:</p></div>
-              <div class="col-xs-7">
-                <div class="input-group">
-                  <select class="form-control" id="add-member-dropdown">
-                    <option value="-1" disabled selected>Select a User</option>
-                    <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
-                      <option value="<%= profile.id %>"><%= profile.display_inline %></option>
+<!-- Begin add users -->
+
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-primary btn-lg" style='margin-left: 0.5em;' data-toggle="modal" data-target="#searchModal">Add Members!</button>
+            
+            <!-- Modal -->
+            <div id="searchModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Search for Jam Members!</h3>
+                  </div>
+                  
+                  <!-- Begin modal body --> 
+                  <div class="modal-body" style='padding: 0'>
+                    <%= form_tag(jam_group_path, :method => "get", id: "search-form", style: 'margin: 10px') do %>
+                    <%= text_field_tag :name, params[:name], placeholder: "Find by name" %>
+                    <%= text_field_tag :location, params[:location], placeholder: "Find by location" %>
+                    <%= submit_tag "Go!" %>
                     <% end %>
-                  </select>
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
-                  </span>
+                    <div class="list-group" style='margin-bottom: 0;'>
+                      <% if @nonmembers.each do |profile| %>
+                       <div class="list-group-item">
+                          <div class="media">
+                            <div class="media-left">
+                              <%= gravatar_for profile.user, class: "media-object" %>
+                            </div>
+                            <div class="media-body">
+                              <%= link_to profile_path(profile), target: "_blank" do %>
+                              <h4 class="media-heading"><%= profile.full_name %></h4>
+                              <% end %>
+                              <h4 class="media-heading">Location: <%= profile.location %></h4>
+                              <h4 class="media-heading">Age: <%= profile.age %></h4>
+                            </div>
+                            <div class="media-right">
+                              <%= button_to "Invite!", { controller: 'jam_group_members', action: 'create'}, remote: true, params: { profile: profile.id, jam_group: @jam_group.id }, class: 'btn btn-primary btn-med'  %>
+                            </div>
+                          </div>
+                        </div>
+
+                      <% end.empty? %>
+                        <li> Couldn't find any users!</li>
+                      <% end %>
+                    </div>
+                  </div>
+                  <!-- End modal body -->
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
+            
               </div>
+            </div>
+
+<!-- End add users -->
             </div>
           </div>
   
@@ -103,3 +148,26 @@
     You are not a member of this Jam Group.
   <% end %>
 </div>
+
+<script>
+function $_GET(param) {
+  var vars = {};
+  window.location.href.replace( location.hash, '' ).replace( 
+    /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    function( m, key, value ) { // callback
+      vars[key] = value !== undefined ? value : '';
+    }
+  );
+
+  if ( param ) {
+    return vars[param] ? vars[param] : null;  
+  }
+  return vars;
+}
+
+  if ($_GET('location') != null || $_GET('name') != null) {
+    console.log(location)
+    $('#searchModal').modal('show');
+  }
+</script>
+
