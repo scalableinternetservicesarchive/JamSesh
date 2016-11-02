@@ -1,23 +1,28 @@
 <% provide(:page, 'chat') %>
 <%= render :layout => 'jam_groups/show' do %>
   <br>
-  <%= form_for @comment, url: {action: "chat"} do |f| %>
-    <%= f.text_area :comment, class: "form-control", placeholder: "Comment" %>
-    <%= f.submit "Add Comment", class: "btn btn-primary" %>
-  <% end %>
-  <br>
-
-  <ul class="media-list">
-    <% @jam_group.comments.order('created_at DESC').each do |comment| %>
-      <li class="media">
-        <div class="media-left">
-          <%= gravatar_for comment.profile.user, "media-object", "64x64" %>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading"><%= comment.profile.full_name %> <small><%= timeago(comment.created_at) %></small></h4>
-          <%= comment.comment %>
-        </div>
-      </li>
+  <% if @jam_group.jam_group_members.find_by(profile_id: current_user.profile.id) %>
+    <%= form_for @comment, url: {action: "chat"} do |f| %>
+      <%= f.text_area :comment, class: "form-control", placeholder: "Comment" %>
+      <%= f.submit "Add Comment", class: "btn btn-primary" %>
     <% end %>
-  </ul>
+    <br>
+  
+    <ul class="media-list">
+      <% @jam_group.comments.order('created_at DESC').each do |comment| %>
+        <li class="media">
+          <div class="media-left">
+            <%= gravatar_for comment.profile.user, "media-object", "64x64" %>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= comment.profile.full_name %> <small><%= timeago(comment.created_at) %></small></h4>
+            <%= comment.comment %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    You are not a member of this Jam Group.
+  <% end %>
+
 <% end %>

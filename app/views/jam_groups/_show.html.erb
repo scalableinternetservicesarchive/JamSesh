@@ -7,83 +7,99 @@
       <h1><%= @jam_group.name %></h1>
       <p><small><b>Last Updated:</b> <%= @jam_group.updated_at %></small></p>
     </div>
-    <div class="col-md-1 col-sm-2 col-xs-2">
-      <br/>
-      <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Actions <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><%= link_to 'Edit Group Info', edit_jam_group_path(@jam_group) %></li>
-          <li><%= link_to 'Leave this group', @jam_group, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-          <li role="separator" class="divider"></li>
-          <li class="text-danger"><%= link_to 'Delete this group', jam_group_path(@jam_group, force_delete: 'true'), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-danger" %></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-7">
-      <ul class="nav nav-tabs">
-        <li role="presentation" <% if yield(:page) == 'info' %>class="active"<% end %> ><%= link_to 'Info', @jam_group %></li>
-        <li role="presentation" <% if yield(:page) == 'chat' %>class="active"<% end %> ><%= link_to 'Chat', jam_group_chat_url(@jam_group) %></li>
-      </ul>
-      <%= yield %>
-      <hr>
-    </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Members 
+    
+    <% if @jam_group.jam_group_members.find_by(profile_id: current_user.profile.id) %>
+      <div class="col-md-1 col-sm-2 col-xs-2">
+        <br/>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Edit Group Info', edit_jam_group_path(@jam_group) %></li>
+            <li><%= link_to 'Leave this group', @jam_group, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+            <li role="separator" class="divider"></li>
+            <li class="text-danger"><%= link_to 'Delete this group', jam_group_path(@jam_group, force_delete: 'true'), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-danger" %></li>
+          </ul>
         </div>
-
-        <div class="panel-body">
-          <div class="row hidden" id="add-member-warning">
-            <div class="col-xs-12"><p class="text-danger">* Select a user first!</p></div>
+      </div>
+    <% end %>
+    
+  </div>
+  
+  <% if @jam_group.jam_group_members.find_by(profile_id: current_user.profile.id) %>
+  <div class="row">
+      <div class="col-sm-7">
+        <ul class="nav nav-tabs">
+          <li role="presentation" <% if yield(:page) == 'info' %>class="active"<% end %> ><%= link_to 'Info', @jam_group %></li>
+          <li role="presentation" <% if yield(:page) == 'chat' %>class="active"<% end %> ><%= link_to 'Chat', jam_group_chat_url(@jam_group) %></li>
+        </ul>
+        <%= yield %>
+        <hr>
+      </div>
+      <div class="col-sm-1"></div>
+      
+      <div class="col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Members 
           </div>
-          <div class="row">
-            <div class="col-xs-5"><p>Add a Member:</p></div>
-            <div class="col-xs-7">
-              <div class="input-group">
-                <select class="form-control" id="add-member-dropdown">
-                  <option value="-1" disabled selected>Select a User</option>
-                  <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
-                    <option value="<%= profile.id %>"><%= profile.display_inline %></option>
-                  <% end %>
-                </select>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
-                </span>
+  
+          <div class="panel-body">
+            <div class="row hidden" id="add-member-warning">
+              <div class="col-xs-12"><p class="text-danger">* Select a user first!</p></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-5"><p>Add a Member:</p></div>
+              <div class="col-xs-7">
+                <div class="input-group">
+                  <select class="form-control" id="add-member-dropdown">
+                    <option value="-1" disabled selected>Select a User</option>
+                    <% (Profile.all - @jam_group.members.all.to_a).each do |profile| %>
+                      <option value="<%= profile.id %>"><%= profile.display_inline %></option>
+                    <% end %>
+                  </select>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="add-member-button" data-jamgroupid="<%= @jam_group.id %>" data-currentuserid="<%= current_user.profile.id %>">Add</button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="list-group">
-          <% if @jam_group.jam_group_members.each do |member| %>
-            <%= link_to profile_path(member.profile), class: "list-group-item" do %>
-              <div class="media">
-                <div class="media-left">
-                  <%= gravatar_for member.profile.user, clazz: "media-object" %>
-                </div>
-                <div class="media-body">
-                  <h4 class="media-heading"><%= member.profile.full_name %></h4>
-                  <p>
+  
+          <div class="list-group">
+            <% if @jam_group.jam_group_members.each do |member| %>
+              <%= link_to profile_path(member.profile), class: "list-group-item" do %>
+                <div class="media">
+                  <div class="media-left">
+                    <%= gravatar_for member.profile.user, clazz: "media-object" %>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading"><%= member.profile.full_name %></h4>
                     <% if member.status.capitalize == "Pending" %>
                       Pending since
                     <% else %>
                       <%= member.status.capitalize %>
-                    <% end %> <%= member.updated_at %></p>
+                    <% end %> 
+                    <%= member.updated_at %>
+                    <% if member.status.capitalize == "Joined" %>
+                      <b>Email:</b> <%= member.profile.user.email %>
+                      <% if !member.profile.phone.blank? %>
+                        </br>
+                        <b>Phone:</b> <%= member.profile.phone %>
+                      <% end %>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
+              <% end %>
+            <% end.empty? %>
+              <li>No Members!</li>
             <% end %>
-          <% end.empty? %>
-            <li>No Members!</li>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% else %>
+    You are not a member of this Jam Group.
+  <% end %>
 </div>

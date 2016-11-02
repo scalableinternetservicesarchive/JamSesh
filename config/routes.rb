@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   root "application#home"
   devise_for :users
   
+  # get 'profiles/edit_public' => 'profiles#edit_public'
+  # get 'profiles/edit_private' => 'profiles#edit_private'
   resources :profiles do
+    get 'edit_profile' => 'profiles#edit_profile'
+    get 'edit_contact' => 'profiles#edit_contact'
     get 'getInstruments' => 'profiles#getInstruments'
     post 'addInstrument' => 'profiles#addInstrument'
     delete 'removeInstrument' => 'profiles#removeInstrument'
