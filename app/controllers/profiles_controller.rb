@@ -12,7 +12,10 @@ class ProfilesController < ApplicationController
     artists = profile_params[:artists_list].split(",").map do |artist_name|
       artist_name.strip!
       Artist.where(name: artist_name).first_or_create do |artist|
-        #artist.spotify_id = Spotty.get_spotyify_id(artist_name)
+	 artist_obj = Spotty.search_artist(artist_name)
+	 artist.spotify_id = artist_obj.id
+	 artist.photo_url = artist_obj.images.first['url']
+	 artist.genres = artist_obj.genres.join(",")
       end
     end
     @profile.assign_attributes(profile_params)

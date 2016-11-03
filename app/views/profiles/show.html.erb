@@ -35,4 +35,17 @@
   <p><strong>Location:</strong> <% if @profile.location.blank? %>Not Provided<% else %><%= @profile.location %><% end %></p>
 
   <p><strong>Bio:</strong> <% if @profile.bio.blank? %>Not Provided<% else %><%= @profile.bio %><% end %></p>
+
+  <p><strong>Artists:</strong></p>
+  <div class="row">
+	  <% @profile.artists.each do |a| %>
+		  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+			  <a class="thumbnail" href="#">
+				  <%= image_tag(a.photo_url, class: "img-responsive") %>
+			  </a>
+			  <p class="text-center"><%=a.name%></p>
+		  </div>
+	  <% end %>
+  </div>
+
 </div>

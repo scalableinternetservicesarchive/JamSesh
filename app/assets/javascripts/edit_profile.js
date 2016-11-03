@@ -38,8 +38,10 @@ $(document).ready(function(){
     removeInstrument(instrument_id);
   });
 
-  console.log("ciao");
-  $("[data-tags]").tagsInput();
+  $("[data-tags]").tagsInput({
+    autocomplete_url: "/spotty_api/autocomplete",
+    width: '100%'
+  });
 })
 
 function addInstrument(instrument_id, proficiency, owned) {

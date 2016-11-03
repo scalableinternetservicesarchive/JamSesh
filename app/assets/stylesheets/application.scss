@@ -13,10 +13,19 @@
  */
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 
-/*= require jquery-tags-input */
+/*
+ *= require jquery-tags-input
+ *= require jquery-ui
+ */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.img-responsive {
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  max-height: 200px;
+}
 
 .body-content {
   margin-top: 50px;

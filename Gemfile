@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 
 gem 'rspotify', '1.18.0'
+gem 'jquery-ui-rails'
 gem 'rails-assets-jquery-tags-input', source: 'https://rails-assets.org'
 gem 'mime-types', '~> 2.0'
 
