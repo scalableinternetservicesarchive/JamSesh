@@ -40,11 +40,11 @@ class ProfilesController < ApplicationController
   end
 
   def addInstrument
-    if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil && params[:owned] != nil
-      @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
+    if params[:instrument] != nil && @profile.id != nil && params[:proficiency] != nil && params[:owned] != nil
+      @instrument_profile = InstrumentProfile.find_by(profile_id: @profile.id, instrument_id: params[:instrument])
       if @instrument_profile == nil
         @instrument_profile = InstrumentProfile.create(:instrument_id => params[:instrument],
-                                                        :profile_id => params[:profile], 
+                                                        :profile_id => @profile.id, 
                                                         :proficiency => params[:proficiency],
                                                         :owned => params[:owned])
       else
@@ -59,8 +59,8 @@ class ProfilesController < ApplicationController
   end
 
   def removeInstrument
-    if params[:instrument] != nil && params[:profile] != nil
-      @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
+    if params[:instrument] != nil && @profile.id != nil
+      @instrument_profile = InstrumentProfile.find_by(profile_id: @profile.id, instrument_id: params[:instrument])
       if @instrument_profile != nil
         @instrument_profile.destroy
       end
