@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+  
   $(document).on('click','#add_instrument', function() {    
     var instrument_id = $("[name='instruments']")[0].value;
     var proficiency = $("[name='proficiency']")[0].value;
@@ -38,6 +38,10 @@ $(document).ready(function(){
     removeInstrument(instrument_id);
   });
 
+  $("[data-tags]").tagsInput({
+    autocomplete_url: "/spotty_api/autocomplete",
+    width: '100%'
+  });
 })
 
 function addInstrument(instrument_id, proficiency, owned) {

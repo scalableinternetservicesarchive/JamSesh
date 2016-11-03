@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'spotty_api/autocomplete'
+
   get 'spotty_api/song'
 
   get 'spotty_api/artist'

@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101005957) do
+ActiveRecord::Schema.define(version: 20161101235723) do
+
+  create_table "artists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "spotify_id"
+    t.string   "photo_url"
+    t.text     "genres"
+  end
+
+  create_table "artists_profiles", force: :cascade do |t|
+    t.integer "artist_id"
+    t.integer "profile_id"
+    t.index ["artist_id"], name: "index_artists_profiles_on_artist_id"
+    t.index ["profile_id"], name: "index_artists_profiles_on_profile_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "comment"
@@ -20,16 +36,6 @@ ActiveRecord::Schema.define(version: 20161101005957) do
     t.datetime "updated_at",   null: false
     t.index ["jam_group_id"], name: "index_comments_on_jam_group_id"
     t.index ["profile_id"], name: "index_comments_on_profile_id"
-  end
-
-  create_table "friendships", force: :cascade do |t|
-    t.string   "friendable_type"
-    t.integer  "friendable_id"
-    t.integer  "friend_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "blocker_id"
-    t.integer  "status"
   end
 
   create_table "instrument_profiles", force: :cascade do |t|
