@@ -2,9 +2,15 @@ $(document).ready(function(){
   
   $(document).on('click','#add_instrument', function() {    
     var instrument_id = $("[name='instruments']")[0].value;
-    var proficiency = $("[name='proficiency']")[0].value;
-    var owned = $("[name='owned']")[0].value;
-    addInstrument(instrument_id, proficiency, owned);
+    
+    if (instrument_id == -1){
+      alert("Please select an instrument");
+    }
+    else {
+      var proficiency = $("[name='proficiency']")[0].value;
+      var owned = $("[name='owned']")[0].value;
+      addInstrument(instrument_id, proficiency, owned);
+    }
   });
   
   $(document).on('click', '.edit_instrument', function(event) {
@@ -48,7 +54,7 @@ function addInstrument(instrument_id, proficiency, owned) {
   var profile_id = $('#profile_id')[0].innerHTML;
 
   $.ajax({
-    url: '/profile/addInstrument?instrument=' + instrument_id + '&profile=' + profile_id + '&proficiency=' + proficiency + "&owned=" + owned,
+    url: '/profiles/' + profile_id + '/addInstrument?instrument=' + instrument_id + '&proficiency=' + proficiency + "&owned=" + owned,
     type: 'POST',
     success: function(data) {
       var instrument_row = $('#i_id-' + instrument_id);
@@ -123,7 +129,7 @@ function removeInstrument(instrument_id) {
   var profile_id = $('#profile_id')[0].innerHTML;
 
   $.ajax({
-    url: '/profile/removeInstrument?instrument=' + instrument_id + '&profile=' + profile_id,
+    url: '/profiles/' + profile_id + '/removeInstrument?instrument=' + instrument_id,
     type: 'DELETE',
     success: function(data) {
       var instrument_row = $('#i_id-' + instrument_id);

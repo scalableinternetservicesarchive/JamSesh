@@ -111,6 +111,7 @@
             <tr>
               <td>
                 <select name="instruments" class="form-control">
+                  <option value="-1" selected disabled>Select an instrument</option>
                   <%= options_from_collection_for_select(Instrument.all, :id, :name) %>
                 </select>
               </td>
