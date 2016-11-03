@@ -26,10 +26,13 @@ class ProfilesController < ApplicationController
     @profile.artists = artists
     if @profile.save
       flash[:notice] = "Profile updated"
-      redirect_to edit_profile_path(@profile)
-    else
-      render 'edit'
     end
+    redirect_to profile_edit_profile_path(@profile)
+=begin
+    else
+      render 'edit_profile'
+    end
+=end
   end
 
   def getInstruments
