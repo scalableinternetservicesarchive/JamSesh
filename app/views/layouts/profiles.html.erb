@@ -1,0 +1,17 @@
+<% content_for :tabs do -%>
+<div class="container">
+  <h1 class="title">Edit Profile</h1>
+  <br/>
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" <% if yield(:page) == 'edit_profile' %>class="active"<% end %>>
+      <%= link_to 'Public Profile', profile_edit_profile_path %>
+    </li>
+    <li role="presentation" <% if yield(:page) == 'edit_contact' %>class="active"<% end %>>
+      <%= link_to 'Contact Info', profile_edit_contact_path %>
+    </li>
+  </ul>
+  <br/>
+</div>
+<% end -%>
+
+<%= render :file => "layouts/application" %>

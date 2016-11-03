@@ -3,6 +3,11 @@ require 'Spotty.rb'
 #TODO: Return actual error codes/pages
 
 class SpottyApiController < ApplicationController
+  def autocomplete
+	  artists = Spotty.autocomplete(params[:term])
+	  render json: artists.map {|a| {id: a.id, label: a.name, value: a.name}  }
+  end
+
   def song
 	  if params[:song].nil?
 		  render :text => "Give me a song"

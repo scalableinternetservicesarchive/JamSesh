@@ -1,8 +1,10 @@
+<% provide(:page, 'edit_profile') %>
 <div class="container">
   <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
-      <h1 class="title">Edit profile</h1>
+      
+      <p>This information will be publicly available to all Jammers.</p>
 
       <span style="display: none;" id="profile_id"><%= @profile.id %></span>
 
@@ -21,25 +23,25 @@
             </div>
           </div>
         </div>
-
+        
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-sm-3">
             <div class="form-group">
               <%= f.label :age %><br>
               <%= f.number_field :age, in: 0..120, class: "form-control" %>
             </div>
           </div>
-          <div class="col-xs-8">
+          <div class="col-sm-9">
             <div class="form-group">
-              <%= f.label :phone %><br>
-              <%= f.telephone_field :phone, class: "form-control" %>
+              <%= f.label :location %><br>
+              <%= f.text_field :location, class: "form-control" %>
             </div>
           </div>
         </div>
-
-        <div class="form-group">
-          <%= f.label :location %>
-          <%= f.text_field :location, class: "form-control" %>
+	
+	<div class="form-group">
+          <%= f.label :Artists_You_Enjoy %>
+	  <%= f.text_field :artists_list, class: "form-control", data: {tags: true} %>
         </div>
 
         <table class="table" id="instrument-table">
