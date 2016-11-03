@@ -1,0 +1,20 @@
+<% content_for :tabs do -%>
+<div class="container">
+  <h1 class="title">Insert Title Here</h1>
+  <br/>
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" <% if yield(:page) == 'page1' %>class="active"<% end %>>
+      <%= link_to 'Link1', jam_groups_url %>
+    </li>
+    <li role="presentation" <% if yield(:page) == 'page2' %>class="active"<% end %>>
+      <%= link_to 'Link2', jam_groups_url %>
+    </li>
+    <li role="presentation" <% if yield(:page) == 'page3' %>class="active"<% end %>>
+      <%= link_to 'Link3', jam_groups_url %>
+    </li>
+  </ul>
+  <br/>
+</div>
+<% end -%>
+
+<%= render :file => "layouts/application" %>

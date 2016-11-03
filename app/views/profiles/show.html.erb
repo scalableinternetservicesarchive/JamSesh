@@ -2,7 +2,7 @@
   <h1><%= @profile.first_name + ' ' +  @profile.last_name %></h1>
 
   <p><strong>Age:</strong> <% if @profile.age.blank? %>Not Provided<% else %><%= @profile.age %><% end %></p>
-  <p><strong>Phone Number:</strong> <% if @profile.phone.blank? %>Not Provided<% else %><%= @profile.phone %><% end %></p>
+  <!--<p><strong>Phone Number:</strong> <% if @profile.phone.blank? %>Not Provided<% else %><%= @profile.phone %><% end %></p>-->
 
   <td><strong>Instruments:</strong>
   <table class="show-instruments-table table table-bordered">
@@ -10,7 +10,7 @@
       <tr>
         <th>Instrument Type</th>
         <th>Proficiency</th>
-        <th>Possession</th>
+        <th>Owned</th>
       </tr>
     </thead>
     <tbody>
@@ -23,11 +23,11 @@
             <%= i.proficiency %>
           </td>
           <td class="show-own-status">
-            <%= i.owned ? "I own this instrument" : "I do not own this instrument" %>
+            <%= i.owned ? "Owns this instrument" : "Does not own this instrument" %>
           </td>
         </tr>
       <% end.empty? %>
-        <tr><td colspan="2">You play no instruments!</td></tr>
+        <tr><td colspan="3">No instruments</td></tr>
       <% end %>
     </tbody>
   </table>

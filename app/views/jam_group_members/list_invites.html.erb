@@ -1,0 +1,27 @@
+<% provide(:page, 'invitations') %>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>JamGroup</th>
+        <th>Status</th>
+        <th>Invited By</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @invites.each do |invite| %>
+        <tr>
+          <td><%= invite.jam_group.name %></td>
+          <td><%= invite.status %></td>
+          <td><%= invite.invited_by.display_inline %></td>
+          <td><%= link_to 'Accept', jam_group_member_accept_invite_path(jam_group_member_id: invite.id), method: :post, class: "text-success" %></td>
+          <td><%= link_to 'Reject', jam_group_member_reject_invite_path(jam_group_member_id: invite.id), method: :post, class: "text-danger" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

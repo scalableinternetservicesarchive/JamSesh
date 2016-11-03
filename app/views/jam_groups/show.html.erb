@@ -1,0 +1,5 @@
+<% provide(:page, 'info') %>
+<%= render :layout => 'jam_groups/show' do %>
+  <h3>Description:</h3>
+  <p><%= @jam_group.description %></p>
+<% end %>

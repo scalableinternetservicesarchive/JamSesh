@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>Editing Jam Group</h1>
+
+  <% if @jam_group.jam_group_members.find_by(profile_id: current_user.profile.id) %>
+    <%= render 'form', jam_group: @jam_group %>
+    <%= link_to 'Show', @jam_group %> |
+  <% else %>
+    You are not a member of this Jam Group </br>
+  <% end %>
+  
+  <%= link_to 'Back', jam_groups_path %>
+</div>
