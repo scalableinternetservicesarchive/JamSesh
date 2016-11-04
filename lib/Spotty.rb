@@ -16,6 +16,13 @@ class Spotty
 		RSpotify.authenticate(cli_id, cli_secret)
 	end
 
+	# for use with autocomplete
+	def self.autocomplete(artist)
+		artist = artist + "*"
+		artists = RSpotify::Artist.search(artist, limit: 10)
+		return artists
+	end
+
 	# returns an artist class
 	def self.search_artist(artist)
 		artists = RSpotify::Artist.search(artist)
