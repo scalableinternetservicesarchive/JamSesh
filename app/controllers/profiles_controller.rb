@@ -13,17 +13,21 @@ class ProfilesController < ApplicationController
   end
   
   def update
-    artists = profile_params[:artists_list].split(",").map do |artist_name|
-      artist_name.strip!
-      Artist.where(name: artist_name).first_or_create do |artist|
-	 artist_obj = Spotty.search_artist(artist_name)
-	 artist.spotify_id = artist_obj.id
-	 artist.photo_url = artist_obj.images.first['url']
-	 artist.genres = artist_obj.genres.join(",")
-      end
-    end
     @profile.assign_attributes(profile_params)
-    @profile.artists = artists
+    
+    if profile_params[:artists_list]
+      artists = profile_params[:artists_list].split(",").map do |artist_name|
+        artist_name.strip!
+        Artist.where(name: artist_name).first_or_create do |artist|
+      	 artist_obj = Spotty.search_artist(artist_name)
+      	 artist.spotify_id = artist_obj.id
+      	 artist.photo_url = artist_obj.images.first['url']
+      	 artist.genres = artist_obj.genres.join(",")
+        end
+      end
+      @profile.artists = artists
+    end
+    
     if @profile.save
       flash[:notice] = "Profile updated"
     end
@@ -40,11 +44,11 @@ class ProfilesController < ApplicationController
   end
 
   def addInstrument
-    if params[:instrument] != nil && params[:profile] != nil && params[:proficiency] != nil && params[:owned] != nil
-      @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
+    if params[:instrument] != nil && @profile.id != nil && params[:proficiency] != nil && params[:owned] != nil
+      @instrument_profile = InstrumentProfile.find_by(profile_id: @profile.id, instrument_id: params[:instrument])
       if @instrument_profile == nil
         @instrument_profile = InstrumentProfile.create(:instrument_id => params[:instrument],
-                                                        :profile_id => params[:profile], 
+                                                        :profile_id => @profile.id, 
                                                         :proficiency => params[:proficiency],
                                                         :owned => params[:owned])
       else
@@ -59,8 +63,8 @@ class ProfilesController < ApplicationController
   end
 
   def removeInstrument
-    if params[:instrument] != nil && params[:profile] != nil
-      @instrument_profile = InstrumentProfile.find_by(profile_id: params[:profile], instrument_id: params[:instrument])
+    if params[:instrument] != nil && @profile.id != nil
+      @instrument_profile = InstrumentProfile.find_by(profile_id: @profile.id, instrument_id: params[:instrument])
       if @instrument_profile != nil
         @instrument_profile.destroy
       end
