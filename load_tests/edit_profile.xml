@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='15000'/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="jamsesh-demo.2pnkiak6fm.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+  </servers>
+
+
+  <load>
+    <arrivalphase phase="1" duration="5" unit="second">
+      <users arrivalrate="1" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="5" unit="second">
+      <users arrivalrate="2" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="5" unit="second">
+      <users arrivalrate="3" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="5" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <!-- Set connection timeout to 2 seconds -->
+    <option name="global_ack_timeout" value="2000"></option>
+
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+
+  <sessions>
+    <session name="edit-profile" probability="100" type="ts_http">
+      <!-- visit home page -->
+      <request>
+      	<http url='/' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+      
+      <!-- visit signin page-->
+      <request>
+        <dyn_variable name="authenticity_token"></dyn_variable>
+      	<http url='/users/sign_in' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="7" random="true"></thinktime>
+      
+      <!-- choose random user -->
+      <setdynvars sourcetype="random_number" start="1" end="200">
+        <var name="usernumber" />
+      </setdynvars>
+      
+      <!-- sign in -->
+      <request>
+      	<http url='/users/sign_in' version='1.1' method='POST'
+      	  contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
+      	  content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="6" random="true"></thinktime>
+      
+      <!--Go to edit profile page-->
+      <request>
+      	<http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+      
+      <!--Edit contact info-->
+      <request>
+      	<http url='/profiles/%%_usernumber%%/edit_contact' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="10" random="true"></thinktime>
+      
+      <request>
+        <http url='/profiles/%%_usernumber%%' version='1.1' method='POST'
+      	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="4" random="true"></thinktime>
+      
+      <!--Edit public profile-->
+      <request>
+      	<http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="10" random="true"></thinktime>
+      
+      <request>
+        <http url='/profiles/%%_usernumber%%' version='1.1' method='POST'
+      	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bfirst_name%5d=person%%_usernumber%%&amp;user%5Blast_name%5D=Clinton&amp;profile%5bage%5d=69&amp;profile%5blocation%5d=SantaBarbara&amp;profile%5bartists_list%5d=&amp;profile%5bbio%5d=iLikeCheeseAndMusak"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      
+      <!--Add some instruments-->
+      <request>
+        <http url="/addInstrument" version="1.1" method="POST"
+          contents="instrument=1&amp;proficiency=Newb&amp;owned=true"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+      
+      <request>
+        <http url="/addInstrument" version="1.1" method="POST"
+          contents="instrument=2&amp;proficiency=Newb&amp;owned=true"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+      
+      <request>
+        <http url="/addInstrument" version="1.1" method="POST"
+          contents="instrument=3&amp;proficiency=Newb&amp;owned=true"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+      
+      <request>
+        <http url="/addInstrument" version="1.1" method="POST"
+          contents="instrument=4&amp;proficiency=Newb&amp;owned=true"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+    </session>
+  </sessions>
+</tsung>
