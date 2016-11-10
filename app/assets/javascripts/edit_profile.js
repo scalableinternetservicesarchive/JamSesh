@@ -46,6 +46,7 @@ $(document).ready(function(){
 
   $("[data-tags]").tagsInput({
     autocomplete_url: "/spotty_api/autocomplete",
+    onlyAutocomplete: true,
     width: '100%'
   });
 })

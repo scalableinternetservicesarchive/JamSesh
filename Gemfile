@@ -26,7 +26,7 @@ gem 'devise'
 
 gem 'rspotify', '1.18.0'
 gem 'jquery-ui-rails'
-gem 'rails-assets-jquery-tags-input', source: 'https://rails-assets.org'
+#gem 'rails-assets-jquery-tags-input', source: 'https://rails-assets.org'
 gem 'mime-types', '~> 2.0'
 
 gem 'bootstrap-sass', '~> 3.3.6'
