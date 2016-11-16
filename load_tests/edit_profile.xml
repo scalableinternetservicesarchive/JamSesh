@@ -129,28 +129,28 @@
       <!--Add some instruments-->
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="instrument=1&amp;proficiency=Newb&amp;owned=true"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=1&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="instrument=2&amp;proficiency=Newb&amp;owned=true"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=2&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="instrument=3&amp;proficiency=Newb&amp;owned=true"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=3&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="instrument=4&amp;proficiency=Newb&amp;owned=true"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=4&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
     </session>
