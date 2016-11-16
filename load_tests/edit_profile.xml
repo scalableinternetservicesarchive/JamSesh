@@ -63,12 +63,12 @@
       <!-- urlencode authenticity_token -->
       <setdynvars sourcetype="eval" 
                   code='fun({Pid,DynVars})->
-                  {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
-                  re:replace(Val,"[+]","%2B",[global, {return,list}]_ end.'>
+			{ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+			,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
         <var name="authenticity_token" />
       </setdynvars>
     
-			<!-- sign in -->
+      <!-- sign in -->
       <request subst="true">
         <http url='/users/sign_in' version='1.1' method='POST'
           contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
@@ -85,9 +85,18 @@
 
       <!--Edit contact info-->
       <request subst="true">
+	<dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
       </request>
       <thinktime value="10" random="true"></thinktime>
+
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval" 
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
       
       <request subst="true">
         <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
@@ -98,9 +107,18 @@
 
       <!--Edit public profile-->
       <request subst="true">
+	<dyn_variable name="authenticity_token"></dyn_variable>
         <http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
       </request>
       <thinktime value="10" random="true"></thinktime>
+
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval" 
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
 
       <request subst="true">
         <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
@@ -110,28 +128,28 @@
       
       <!--Add some instruments-->
       <request subst="true">
-        <http url="/addInstrument" version="1.1" method="POST"
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="instrument=1&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
-        <http url="/addInstrument" version="1.1" method="POST"
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="instrument=2&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
-        <http url="/addInstrument" version="1.1" method="POST"
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="instrument=3&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
-        <http url="/addInstrument" version="1.1" method="POST"
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="instrument=4&amp;proficiency=Newb&amp;owned=true"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
