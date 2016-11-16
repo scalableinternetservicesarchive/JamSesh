@@ -60,6 +60,7 @@
         <var name="usernumber" />
       </setdynvars>
       
+<<<<<<< HEAD
       <!-- urlencode authenticity_token -->
       <setdynvars sourcetype="eval" 
                   code='fun({Pid,DynVars})->
@@ -73,18 +74,30 @@
       	<http url='/users/sign_in' version='1.1' method='POST'
       	  contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
       	  content_type="application/x-www-form-urlencoded"></http>
+=======
+			<!-- sign in -->
+      <request subst="true">
+        <http url='/users/sign_in' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
+          content_type="application/x-www-form-urlencoded"></http>
+>>>>>>> fd8d9477bc6019a60bfaa1916ecfe023cdad7eb7
       </request>
       <thinktime value="6" random="true"></thinktime>
-      
+
       <!--Go to edit profile page-->
       <request subst="true">
         <dyn_variable name="profileid" re='&lt;a href="/profiles/(\d*)/edit_profile"&gt;Edit Profile'></dyn_variable>
+<<<<<<< HEAD
       	<http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
+=======
+        <http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
+>>>>>>> fd8d9477bc6019a60bfaa1916ecfe023cdad7eb7
       </request>
       <thinktime value="2" random="true"></thinktime>
-      
+
       <!--Edit contact info-->
       <request subst="true">
+<<<<<<< HEAD
       	<http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
       </request>
       <thinktime value="10" random="true"></thinktime>
@@ -92,12 +105,22 @@
       <request subst="true">
         <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
       	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
+=======
+        <http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="10" random="true"></thinktime>
+
+      <request subst="true">
+        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
+>>>>>>> fd8d9477bc6019a60bfaa1916ecfe023cdad7eb7
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="4" random="true"></thinktime>
-      
+
       <!--Edit public profile-->
       <request subst="true">
+<<<<<<< HEAD
       	<http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
       </request>
       <thinktime value="10" random="true"></thinktime>
@@ -105,6 +128,15 @@
       <request subst="true">
         <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
       	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bfirst_name%5d=person%%_usernumber%%&amp;user%5Blast_name%5D=Clinton&amp;profile%5bage%5d=69&amp;profile%5blocation%5d=SantaBarbara&amp;profile%5bartists_list%5d=&amp;profile%5bbio%5d=iLikeCheeseAndMusak"
+=======
+        <http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="10" random="true"></thinktime>
+
+      <request subst="true">
+        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bfirst_name%5d=person%%_usernumber%%&amp;user%5Blast_name%5D=Clinton&amp;profile%5bage%5d=69&amp;profile%5blocation%5d=SantaBarbara&amp;profile%5bartists_list%5d=&amp;profile%5bbio%5d=iLikeCheeseAndMusak"
+>>>>>>> fd8d9477bc6019a60bfaa1916ecfe023cdad7eb7
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       
