@@ -8,7 +8,7 @@ proficiencies = [:Newb, :Beginner, :Novice, :Intermediate, :Experienced, :Expert
 statuses = [:pending, :joined]
 
 1000.times do |n|
-  u = User.create(email: "person#{n}@example.com", password: "password", password_confirmation: "password")
+  u = User.create(email: "person#{n+1}@example.com", password: "password", password_confirmation: "password")
 
   p = u.profile
   p.first_name = "First#{n}"
