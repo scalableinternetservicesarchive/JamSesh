@@ -8,10 +8,11 @@ jam_group_ids = JamGroup.all.map(&:id)
 
 proficiencies = [:Newb, :Beginner, :Novice, :Intermediate, :Experienced, :Expert, :Virtuoso]
 statuses = [0, 1]
+password = User.new(:password => "password").encrypted_password
 
 User.transaction do
   1000.times do |n|
-    User.connection.execute "INSERT INTO users (id, email, encrypted_password, created_at, updated_at) VALUES (#{n}, 'person#{n}@example.com', '#{User.new(:password => "password").encrypted_password}', NOW(), NOW())"
+    User.connection.execute "INSERT INTO users (id, email, encrypted_password, created_at, updated_at) VALUES (#{n}, 'person#{n}@example.com', '#{password}', NOW(), NOW())"
   end
 end
 
