@@ -3,45 +3,32 @@ require "factory_girl"
 
 FactoryGirl.create_list(:instrument, 30)
 FactoryGirl.create_list(:jam_group, 200)
+instrument_ids = Instrument.all.map(&:id)
+jam_group_ids = JamGroup.all.map(&:id)
 
 proficiencies = [:Newb, :Beginner, :Novice, :Intermediate, :Experienced, :Expert, :Virtuoso]
 statuses = [:pending, :joined]
 
-users = []
-profiles = []
 1000.times do |n|
-  User.connection.execute "INSERT INTO users (`id`, `email`, `encrypted_password`, `created_at`, `updated_at`) VALUES (#{n}, 'person#{n}@example.com', '#{User.new(:password => "password").encrypted_password}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"
+  User.connection.execute "INSERT INTO users (`id`, `email`, `encrypted_password`, `created_at`, `updated_at`) VALUES (#{n}, 'person#{n}@example.com', '#{User.new(:password => "password").encrypted_password}', NOW(), NOW())"
 end
 
 1000.times do |n|
-  Profile.connection.execute "INSERT INTO profiles (`id`, `created_at`, `updated_at`, `user_id`, `first_name`, `last_name`, `age`, `location`, `bio`) VALUES (#{n}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{n}, 'First#{n}', 'Last#{n}', #{(1..120).to_a.sample}, 'Santa Barbara, CA', 'Bio #{n}')" 
+  Profile.connection.execute "INSERT INTO profiles (`id`, `created_at`, `updated_at`, `user_id`, `first_name`, `last_name`, `age`, `location`, `bio`) VALUES (#{n}, NOW(), NOW(), #{n}, 'First#{n}', 'Last#{n}', #{(1..120).to_a.sample}, 'Santa Barbara, CA', 'Bio #{n}')" 
 end
 
+profile_ids = Profile.all.map(&:id)
+
 1000.times do |n|
-  p = Profile.find(n)
-  Instrument.limit((1..5).to_a.sample).order("RANDOM()").each do |i|
-    ip = InstrumentProfile.new
-    ip.profile = p
-    ip.instrument = i
-    ip.proficiency = proficiencies.sample
-    ip.owned = [true, false].sample
-    ip.save
+  instrument_ids.sample((1..5).to_a.sample).each do |i|
+    Instrument.connection.execute "INSERT INTO instrument_profiles (`profile_id`, `instrument_id`, `proficiency`, `owned`, `created_at`, `updated_at`) VALUES (#{n}, #{i}, '#{proficiencies.sample}', '#{[true, false].sample}', NOW(), NOW())" 
   end
 
-  JamGroup.limit((2..10).to_a.sample).order("RANDOM()").each do |j|
-    jgm = JamGroupMember.new
-    jgm.profile = p
-    jgm.jam_group = j
-    jgm.invited_by = Profile.offset(rand(Profile.count)).first
-    jgm.status = statuses.sample
-    jgm.save
+  jam_group_ids.sample((2..10).to_a.sample).each do |j|
+    JamGroupMember.connection.execute "INSERT INTO jam_group_members (`profile_id`, `jam_group_id`, `invited_by`, `status`, `created_at`, `updated_at`) VALUES (#{n}, #{j}, #{profile_ids.sample}, '#{statuses.sample}', NOW(), NOW())"
 
     ((10..50).to_a.sample).times do |k|
-      c = Comment.new
-      c.jam_group = j
-      c.profile = p
-      c.comment = "Comment #{k} from #{p.full_name}"
-      c.save
+      Comment.connection.execute "INSERT INTO comments (`jam_group_id`, `profile_id`, `comment`, `created_at`, `updated_at`) VALUES (#{j}, #{n}, 'Comment #{k} from user #{n}', NOW(), NOW())"
     end
   end
 
