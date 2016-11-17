@@ -130,28 +130,36 @@
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="authenticity_token=%%_authenticity_token%%&amp;instrument=1&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded"></http>
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="authenticity_token=%%_authenticity_token%%&amp;instrument=2&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded"></http>
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="authenticity_token=%%_authenticity_token%%&amp;instrument=3&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded"></http>
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
       </request>
       <thinktime value="5" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
           contents="authenticity_token=%%_authenticity_token%%&amp;instrument=4&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded"></http>
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
       </request>
     </session>
   </sessions>
