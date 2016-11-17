@@ -16,6 +16,7 @@ instrument_profiles = []
 members = []
 comments = []
 
+
 1000.times do |n|
   users << "(#{n}, 'person#{n}@example.com', '#{password}', NOW(), NOW())"
   profiles << "(#{n}, NOW(), NOW(), #{n}, 'First#{n}', 'Last#{n}', #{(1..120).to_a.sample}, 'Santa Barbara, CA', 'Bio #{n}')" 
@@ -23,7 +24,7 @@ comments = []
     instrument_profiles << "(#{n}, #{i}, '#{proficiencies.sample}', '#{[true, false].sample}', NOW(), NOW())" 
   end
   jam_group_ids.sample((2..10).to_a.sample).each do |j|
-    members << "(#{n}, #{j}, #{profile_ids.sample}, '#{statuses.sample}', NOW(), NOW())"
+    members << "(#{n}, #{j}, #{n}, '#{statuses.sample}', NOW(), NOW())"
 
     ((10..50).to_a.sample).times do |k|
       comments << "(#{j}, #{n}, 'Comment #{k} from user #{n}', NOW(), NOW())"
@@ -39,7 +40,7 @@ Profile.transaction do
   Profile.connection.execute "INSERT INTO profiles (id, created_at, updated_at, user_id, first_name, last_name, age, location, bio) VALUES #{profiles.join(', ')}"
 end
 
-InstrumenProfile.transaction do
+InstrumentProfile.transaction do
   Instrument.connection.execute "INSERT INTO instrument_profiles (profile_id, instrument_id, proficiency, owned, created_at, updated_at) VALUES #{instrument_profiles.join(', ')}"
 end
 
