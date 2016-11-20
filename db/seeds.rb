@@ -1,4 +1,5 @@
 require "factory_girl"
+require 'Spotty'
 #FactoryGirl.find_definitions
 
 FactoryGirl.create_list(:instrument, 30)
@@ -9,17 +10,38 @@ jam_group_ids = JamGroup.all.map(&:id)
 proficiencies = [:Newb, :Beginner, :Novice, :Intermediate, :Experienced, :Expert, :Virtuoso]
 statuses = [0, 1]
 password = User.new(:password => "password").encrypted_password
+letters = "abcdefghijkl"
 
 users = []
 profiles = []
 instrument_profiles = []
 members = []
 comments = []
+artists = []
+artists_fields = []
+artists_profiles = []
 
+letters.each_char {|c|
+	artist_arr =  Spotty.autocomplete(c)
+	artist_arr.each {|artist|
+		name = artist.name
+		id = artist.id
+		genres = artist.genres.map{|a| a}.join(",")
+		photo_url = artist.images.first['url']
+		artists_fields.push([name, id, photo_url, genres])
+	}
+}
+artists_fields = artists_fields.uniq
+
+for i in 0..artists_fields.length-1
+	artists << "#{i}, '#{artists_fields[i][0]}', NOW(), NOW(), '#{artists_fields[i][1]}', '#{artists_fields[i][2]}', '#{artists_fields[i][3]}'"
+end
 
 1000.times do |n|
   users << "(#{n}, 'person#{n}@example.com', '#{password}', NOW(), NOW())"
   profiles << "(#{n}, NOW(), NOW(), #{n}, 'First#{n}', 'Last#{n}', #{(1..120).to_a.sample}, 'Santa Barbara, CA', 'Bio #{n}')" 
+  (0..artists_fields.length-1).to_a.sample(5).each do |j|
+    artists_profiles << "#{n}, #{j}"
   instrument_ids.sample((1..5).to_a.sample).each do |i|
     instrument_profiles << "(#{n}, #{i}, '#{proficiencies.sample}', '#{[true, false].sample}', NOW(), NOW())" 
   end
@@ -38,6 +60,14 @@ end
 
 Profile.transaction do
   Profile.connection.execute "INSERT INTO profiles (id, created_at, updated_at, user_id, first_name, last_name, age, location, bio) VALUES #{profiles.join(', ')}"
+end
+
+Artist.transaction do
+  Artist.connection.exectute "INSERT INTO artists (id, name, created_at, updated_at, spotify_id, photo_url, genres) VALUES #{artists.join(', ')}"
+end
+
+Artist.transaction do
+  Artist.connection.exectute "INSERT INTO artists_profiles (artist_id, profile_id) VALUES #{artists_profiles.join(', ')}"
 end
 
 InstrumentProfile.transaction do
