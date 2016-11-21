@@ -4,11 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def home
-    @profiles = Profile.all
-    @profiles = @profiles.by_name(params[:name]) if params[:name].present?
-    @profiles = @profiles.by_age_range(params[:age_low], params[:age_high]) if params[:age_low].present? or params[:age_high].present?
-    @profiles = @profiles.by_location(params[:location]) if params[:location].present?
-    @profiles = @profiles.by_instrument(params[:instrument]) if params[:instrument].present?
+    @profiles = Profile
+    @profiles = @profiles.where("first_name LIKE ?", "%#{params[:first_name]}%") if params[:first_name].present?
+    @profiles = @profiles.where("last_name LIKE ?", "%#{params[:last_name]}%") if params[:last_name].present?
+    @profiles = @profiles.where("age > ?", params[:age_low]) if params[:age_low].present?
+    @profiles = @profiles.where("age < ?", params[:age_high]) if params[:age_high].present?
+    @profiles = @profiles.where("location LIKE ?", "%#{params[:location]}%") if params[:location].present?
+    #@profiles = @profiles.by_instrument(params[:instrument]) if params[:instrument].present?
+    @profiles = @profiles.paginate(:page => params[:page], :per_page => 30)
     render "home"
   end
 
@@ -16,7 +19,7 @@ class ApplicationController < ActionController::Base
   private
 
   def application_params
-    params.require(:application).permit(:name, :age_low, :age_high, :location, :instrument)
+    params.require(:application).permit(:first_name, :last_name, :age_low, :age_high, :location, :instrument)
   end
   
 
