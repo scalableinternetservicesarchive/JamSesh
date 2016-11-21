@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
     @profiles = @profiles.where("age < ?", params[:age_high]) if params[:age_high].present?
     @profiles = @profiles.where("location LIKE ?", "%#{params[:location]}%") if params[:location].present?
     #@profiles = @profiles.by_instrument(params[:instrument]) if params[:instrument].present?
-    @profiles = @profiles.paginate(:page => params[:page], :per_page => 30)
+    @profiles = @profiles.paginate(:page => params[:page], :per_page => 30) # TODO: test with and without this!
+    # @profiles = @profiles.preload(:instrument) # TODO: test with and without this!
     render "home"
   end
 
