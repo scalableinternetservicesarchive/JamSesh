@@ -49,7 +49,7 @@
 
 
   <sessions>
-    <session name="returning_user" probability="30" type="ts_http">
+    <session name="returning_user" probability="100" type="ts_http">
       <!-- visit home page -->
       <request>
       	<http url='/' version='1.1' method='GET'></http>
@@ -61,10 +61,10 @@
         <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/users/sign_in' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="7" random="true"></thinktime>
+      <thinktime value="5" random="true"></thinktime>
       
       <!-- choose random user -->
-      <setdynvars sourcetype="random_number" start="1" end="200">
+      <setdynvars sourcetype="random_number" start="1" end="1000">
       <var name="usernumber" />
       </setdynvars>
 
@@ -79,16 +79,16 @@
       <!-- sign in -->
       <request subst="true">
         <http url='/users/sign_in' version='1.1' method='POST'
-          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
+          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%random_number%%@example.com&amp;user%5Bpassword%5D=password"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
-      <thinktime value="6" random="true"></thinktime>
+      <thinktime value="5" random="true"></thinktime>
 
       <!-- Go to Jam Groups-->
       <request>
       	<http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="7" random="true"></thinktime>
+      <thinktime value="5" random="true"></thinktime>
 
       <!-- Visit Jam Group-->
       <request subst="true">
@@ -102,7 +102,7 @@
       <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/jam_groups/%%groupid%%/chat' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="10" random="true"></thinktime>
+      <thinktime value="5" random="true"></thinktime>
 
       <!-- urlencode authenticity_token -->
       <setdynvars sourcetype="eval" 
