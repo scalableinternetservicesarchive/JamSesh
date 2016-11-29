@@ -17,7 +17,7 @@
     <arrivalphase phase="1" duration="5" unit="second">
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
-   <?ignore  <arrivalphase phase="2" duration="5" unit="second">
+    <arrivalphase phase="2" duration="5" unit="second">
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="3" duration="5" unit="second">
@@ -28,7 +28,7 @@
     </arrivalphase>
     <arrivalphase phase="5" duration="5" unit="second">
       <users arrivalrate="5" unit="second"></users>
-    </arrivalphase>?>
+    </arrivalphase>
   </load>
 
   <options>
@@ -50,8 +50,7 @@
 
   <sessions>
 
-    <?ignore
-    <session name="returning_user" probability="100" type="ts_http">
+    <session name="returning_user" probability="30" type="ts_http">
       <!-- visit home page -->
       <request>
       	<http url='/' version='1.1' method='GET'></http>
@@ -123,7 +122,7 @@
       <thinktime value="4" random="true"></thinktime>
 
     </session>
-    ?>
+
     
     
     
@@ -135,7 +134,7 @@
     
     
     
-     <session name="new_user" probability="100" type="ts_http">
+     <session name="new_user" probability="5" type="ts_http">
       <!-- visit home page -->
       <request>
       	<http url='/' version='1.1' method='GET'></http>
@@ -265,6 +264,38 @@
         </http>
       </request>
 
+ <!-- Go to Jam Groups-->
+      <request>
+        <http url='/jam_groups' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+
+
+ <!-- Go to create Jam Groups-->
+      <request>
+        <dyn_variable name="authenticity_token"></dyn_variable>
+        <http url='/jam_groups/new' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+
+
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+
+
+
+ <!--Create  Jam Group-->
+      <request>
+        <http url='/jam_groups' version='1.1' method='POST' contents="authenticity_token=%%_authenticity_token%%&amp;jam_group[name]=sehseh&amp;jam_group[img_url]=/img/headphone.png&amp;jam_group[description]=yoyo"
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
 
  <!-- Go to Jam Groups-->
       <request>
@@ -273,11 +304,71 @@
       </request>
       <thinktime value="5" random="true"></thinktime>
 
+<!-- Visit Jam Group-->
+      <request subst="true">
+        <http url='/jam_groups/%%_groupid%%' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
 
+      <!--Visit chat-->
+      <request subst="true">
+      <dyn_variable name="authenticity_token"></dyn_variable>
+        <http url='/jam_groups/%%_groupid%%/chat' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
 
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+
+      <!--Post Comment-->
+      <request subst="true">
+        <http url='/jam_groups/jam_group_members' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;jam_group=%%_groupid%%&amp;profile=3"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="4" random="true"></thinktime>
 
 	
     </session>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Anon user -->
+
+
+
+
+<session name="anonymous" probability="65" type="ts_http">
+      <!-- visit home page -->
+      <request>
+        <http url='/' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+
+      <request>
+        <http url='/?utf8=%E2%9C%93&amp;first_name=&amp;last_name=&amp;location=&amp;age_low=24&amp;age_high=29&amp;instrument=&amp;commit=Go%21' version='1.1' method='GET'></http>
+      </request>
+
+
+</session>
+
+
+
   </sessions>
 </tsung>
