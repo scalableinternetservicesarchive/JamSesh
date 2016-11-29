@@ -44,6 +44,7 @@ class JamGroupsController < ApplicationController
       @comment = @jam_group.comments.new
       @comment.profile = current_user.profile
     end
+      @comments = @jam_group.comments.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /jam_groups/new

@@ -8,8 +8,10 @@
     <% end %>
     <br>
   
+   <%= will_paginate @comments %>
+  
     <ul class="media-list">
-      <% @jam_group.comments.order('created_at DESC').each do |comment| %>
+      <% @comments.order('created_at DESC').each do |comment| %>
         <li class="media">
           <div class="media-left">
             <%= gravatar_for comment.profile.user, "media-object", "64x64" %>
@@ -21,6 +23,9 @@
         </li>
       <% end %>
     </ul>
+    
+    <%= will_paginate @comments %>
+    
   <% else %>
     You are not a member of this Jam Group.
   <% end %>
