@@ -1,7 +1,6 @@
 require 'rspotify'
 #require 'pry'
 
-
 =begin
 Uses rspotity which might be sufficient to just use on it's own tbh
 Docuentation here: http://www.rubydoc.info/github/guilhermesad/rspotify/master/frames
