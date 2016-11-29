@@ -17,7 +17,7 @@
     <arrivalphase phase="1" duration="5" unit="second">
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="2" duration="5" unit="second">
+   <?ignore  <arrivalphase phase="2" duration="5" unit="second">
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="3" duration="5" unit="second">
@@ -28,7 +28,7 @@
     </arrivalphase>
     <arrivalphase phase="5" duration="5" unit="second">
       <users arrivalrate="5" unit="second"></users>
-    </arrivalphase>
+    </arrivalphase>?>
   </load>
 
   <options>
@@ -49,6 +49,8 @@
 
 
   <sessions>
+
+    <?ignore
     <session name="returning_user" probability="100" type="ts_http">
       <!-- visit home page -->
       <request>
@@ -79,28 +81,28 @@
       <!-- sign in -->
       <request subst="true">
         <http url='/users/sign_in' version='1.1' method='POST'
-          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%random_number%%@example.com&amp;user%5Bpassword%5D=password"
+          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%@example.com&amp;user%5Bpassword%5D=password"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
 
       <!-- Go to Jam Groups-->
       <request>
-      	<http url='/jam_groups' version='1.1' method='GET'></http>
+      	<dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
+        <http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
 
       <!-- Visit Jam Group-->
       <request subst="true">
-        <dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
-      	<http url='/jam_groups/%%groupid%%' version='1.1' method='GET'></http>
+        <http url='/jam_groups/%%_groupid%%' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!--Visit chat-->
       <request subst="true">
       <dyn_variable name="authenticity_token"></dyn_variable>
-      	<http url='/jam_groups/%%groupid%%/chat' version='1.1' method='GET'></http>
+      	<http url='/jam_groups/%%_groupid%%/chat' version='1.1' method='GET'></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
 
@@ -114,14 +116,14 @@
       
       <!--Post Comment-->
       <request subst="true">
-        <http url='/jam_groups/%%groupid%%/chat' version='1.1' method='POST'
+        <http url='/jam_groups/%%_groupid%%/chat' version='1.1' method='POST'
       	  contents="authenticity_token=%%_authenticity_token%%&amp;comment[comment]=hi&amp;commit=Add Comment"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
       <thinktime value="4" random="true"></thinktime>
 
     </session>
-    
+    ?>
     
     
     
@@ -133,8 +135,7 @@
     
     
     
-  <?ignore
-     <session name="new_user" probability="65" type="ts_http">
+     <session name="new_user" probability="100" type="ts_http">
       <!-- visit home page -->
       <request>
       	<http url='/' version='1.1' method='GET'></http>
@@ -146,7 +147,7 @@
         <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/users/sign_up' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="7" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
       
       <!-- choose random user -->
       <setdynvars sourcetype="random_number" start="1" end="200">
@@ -167,7 +168,7 @@
           contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
-      <thinktime value="6" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
   
       <!--Go to edit profile page-->
       <request subst="true">
@@ -190,7 +191,7 @@
   <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="10" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
   
       <!-- urlencode authenticity_token -->
       <setdynvars sourcetype="eval" 
@@ -205,14 +206,14 @@
       	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
-      <thinktime value="4" random="true"></thinktime>
-  
+      <thinktime value="3" random="true"></thinktime>
+
       <!--Edit public profile-->
       <request subst="true">
   <dyn_variable name="authenticity_token"></dyn_variable>
         <http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="10" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
   
       <!-- urlencode authenticity_token -->
       <setdynvars sourcetype="eval" 
@@ -236,7 +237,7 @@
           <http_header name="Accept" value="*/*" />
         </http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
@@ -245,7 +246,7 @@
           <http_header name="Accept" value="*/*" />
         </http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
@@ -254,7 +255,7 @@
           <http_header name="Accept" value="*/*" />
         </http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="3" random="true"></thinktime>
       
       <request subst="true">
         <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
@@ -263,8 +264,20 @@
           <http_header name="Accept" value="*/*" />
         </http>
       </request>
+
+
+ <!-- Go to Jam Groups-->
+      <request>
+        <dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
+        <http url='/jam_groups' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+
+
+
+
+	
     </session>
-    ?>
     
   </sessions>
 </tsung>
