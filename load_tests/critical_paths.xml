@@ -21,14 +21,23 @@
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="3" duration="5" unit="second">
-      <users arrivalrate="3" unit="second"></users>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="5" unit="second">
       <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="5" duration="5" unit="second">
-      <users arrivalrate="5" unit="second"></users>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="8" unit="second"></users>
     </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="16" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="6" duration="5" unit="second">
+      <users arrivalrate="32" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="7" duration="5" unit="second">
+      <users arrivalrate="64" unit="second"></users>
+    </arrivalphase>
+
+
+
   </load>
 
   <options>
