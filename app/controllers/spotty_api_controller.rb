@@ -4,16 +4,16 @@ class SpottyApiController < ApplicationController
   def autocomplete
 	  # checker
 	  puts "autocomplete/#{params[:term]}"
+=begin
 	  artists = Spotty.autocomplete(params[:term])
 	  render json: artists.map {|a| {id: a.id, label: a.name, value: a.name}  }
-=begin
+=end
 	  artists = Rails.cache.fetch("autocomplete/#{params[:term]}", expires_in: 12.hours) do
 	    Spotty.autocomplete(params[:term]).map do |a|
 		  {id: a.id, label: a.name, value: a.name}
 		end
 	  end
 	  render json: artists
-=end
   end
 
   def song
