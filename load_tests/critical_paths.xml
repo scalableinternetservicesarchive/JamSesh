@@ -9,7 +9,7 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="jamsesh-test.wxtcguxzgh.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+    <server host="app-jamsesh.wxtcguxzgh.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
 
 
@@ -21,19 +21,19 @@
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="3" duration="45" unit="second">
-      <users arrivalrate="4" unit="second"></users>
+      <users arrivalrate="3" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="4" duration="45" unit="second">
-      <users arrivalrate="8" unit="second"></users>
+      <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="5" duration="45" unit="second">
-      <users arrivalrate="16" unit="second"></users>
+      <users arrivalrate="5" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="6" duration="45" unit="second">
-      <users arrivalrate="32" unit="second"></users>
+      <users arrivalrate="6" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="7" duration="45" unit="second">
-      <users arrivalrate="64" unit="second"></users>
+      <users arrivalrate="7" unit="second"></users>
     </arrivalphase>
 
 
@@ -61,13 +61,13 @@
 
     <session name="returning_user" probability="30" type="ts_http">
       <!-- visit home page -->
-      <request>
+      <request subst="true">
       	<http url='/' version='1.1' method='GET'></http>
       </request>
       <thinktime value="1" random="true"></thinktime>
       
       <!-- visit signin page-->
-      <request>
+      <request subst="true">
         <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/users/sign_in' version='1.1' method='GET'></http>
       </request>
@@ -95,15 +95,15 @@
       <thinktime value="2" random="true"></thinktime>
 
        <!-- Go to Jam Groups-->
-      <request>
+      <request subst="true">
         <http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
       <thinktime value="1" random="true"></thinktime>
 
 
  <!-- Go to create Jam Groups-->
-      <request>
-        <dyn_variable name="authenticity_token"></dyn_variable>
+      <request subst="true">
+        <!--<dyn_variable name="authenticity_token"></dyn_variable>-->
         <http url='/jam_groups/new' version='1.1' method='GET'></http>
       </request>
       <thinktime value="5" random="true"></thinktime>
@@ -116,7 +116,7 @@
       </setdynvars>
 			 
  <!--Create  Jam Group-->
-      <request>
+      <request subst="true">
         <http url='/jam_groups' version='1.1' method='POST' contents="authenticity_token=%%_authenticity_token%%&amp;jam_group[name]=sehseh&amp;jam_group[img_url]=/img/headphone.png&amp;jam_group[description]=yoyo"
           content_type="application/x-www-form-urlencoded">
           <http_header name="Accept" value="*/*" />
@@ -125,7 +125,7 @@
       <thinktime value="1" random="true"></thinktime>
 
  <!-- Go to Jam Groups-->
-      <request>
+      <request subst="true">
         <dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
         <http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
@@ -166,13 +166,13 @@
     
      <session name="new_user" probability="5" type="ts_http">
       <!-- visit home page -->
-      <request>
+      <request subst="true">
       	<http url='/' version='1.1' method='GET'></http>
       </request>
       <thinktime value="1" random="true"></thinktime>
       
       <!-- visit signup page-->
-      <request>
+      <request subst="true">
         <dyn_variable name="authenticity_token"></dyn_variable>
       	<http url='/users/sign_up' version='1.1' method='GET'></http>
       </request>
@@ -285,12 +285,12 @@
 
 	<session name="anonymous" probability="65" type="ts_http">
 	      <!-- visit home page -->
-	      <request>
+	      <request subst="true">
 		<http url='/' version='1.1' method='GET'></http>
 	      </request>
 	      <thinktime value="2" random="true"></thinktime>
 
-	      <request>
+	      <request subst="true">
 		<http url='/?utf8=%E2%9C%93&amp;first_name=&amp;last_name=&amp;location=&amp;age_low=24&amp;age_high=29&amp;instrument=&amp;commit=Go%21' version='1.1' method='GET'></http>
 	      </request>
 
