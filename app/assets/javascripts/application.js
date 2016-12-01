@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui/autocomplete
+//= require jquery-ui
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require jquery-tags-input
