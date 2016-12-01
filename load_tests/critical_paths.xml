@@ -154,7 +154,7 @@
 
       <!--Post Comment-->
       <request subst="true">
-        <http url='/jam_groups/jam_group_members' version='1.1' method='POST'
+        <http url='/jam_group_members' version='1.1' method='POST'
           contents="authenticity_token=%%_authenticity_token%%&amp;jam_group=%%_groupid%%&amp;profile=3"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
