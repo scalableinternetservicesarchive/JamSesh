@@ -14,25 +14,25 @@
 
 
   <load>
-    <arrivalphase phase="1" duration="5" unit="second">
+    <arrivalphase phase="1" duration="45" unit="second">
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="2" duration="5" unit="second">
+    <arrivalphase phase="2" duration="45" unit="second">
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="3" duration="5" unit="second">
+    <arrivalphase phase="3" duration="45" unit="second">
       <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="4" duration="5" unit="second">
+    <arrivalphase phase="4" duration="45" unit="second">
       <users arrivalrate="8" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="5" duration="5" unit="second">
+    <arrivalphase phase="5" duration="45" unit="second">
       <users arrivalrate="16" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="6" duration="5" unit="second">
+    <arrivalphase phase="6" duration="45" unit="second">
       <users arrivalrate="32" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="7" duration="5" unit="second">
+    <arrivalphase phase="7" duration="45" unit="second">
       <users arrivalrate="64" unit="second"></users>
     </arrivalphase>
 
@@ -64,7 +64,7 @@
       <request>
       	<http url='/' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="2" random="true"></thinktime>
+      <thinktime value="1" random="true"></thinktime>
       
       <!-- visit signin page-->
       <request>
@@ -92,192 +92,13 @@
           contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%@example.com&amp;user%5Bpassword%5D=password"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
-
-      <!-- Go to Jam Groups-->
-      <request>
-      	<dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
-        <http url='/jam_groups' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="5" random="true"></thinktime>
-
-      <!-- Visit Jam Group-->
-      <request subst="true">
-        <http url='/jam_groups/%%_groupid%%' version='1.1' method='GET'></http>
-      </request>
       <thinktime value="2" random="true"></thinktime>
 
-      <!--Visit chat-->
-      <request subst="true">
-      <dyn_variable name="authenticity_token"></dyn_variable>
-      	<http url='/jam_groups/%%_groupid%%/chat' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="5" random="true"></thinktime>
-
-      <!-- urlencode authenticity_token -->
-      <setdynvars sourcetype="eval" 
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
-                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars>
-      
-      <!--Post Comment-->
-      <request subst="true">
-        <http url='/jam_groups/%%_groupid%%/chat' version='1.1' method='POST'
-      	  contents="authenticity_token=%%_authenticity_token%%&amp;comment[comment]=hi&amp;commit=Add Comment"
-          content_type="application/x-www-form-urlencoded"></http>
-      </request>
-      <thinktime value="4" random="true"></thinktime>
-
-    </session>
-
-    
-    
-    
-    
-    
-    <!-- NEW USER -->
-    
-    
-    
-    
-    
-     <session name="new_user" probability="5" type="ts_http">
-      <!-- visit home page -->
-      <request>
-      	<http url='/' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="2" random="true"></thinktime>
-      
-      <!-- visit signup page-->
-      <request>
-        <dyn_variable name="authenticity_token"></dyn_variable>
-      	<http url='/users/sign_up' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-      
-      <!-- choose random user -->
-      <setdynvars sourcetype="random_number" start="1" end="200">
-      <var name="usernumber" />
-      </setdynvars>
-  
-      <!-- urlencode authenticity_token -->
-      <setdynvars sourcetype="eval" 
-      code='fun({Pid,DynVars})->
-  {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
-  ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars>
-    
-      <!-- sign in -->
-      <request subst="true">
-        <http url='/users/sign_in' version='1.1' method='POST'
-          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
-          content_type="application/x-www-form-urlencoded"></http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-  
-      <!--Go to edit profile page-->
-      <request subst="true">
-        <dyn_variable name="profileid" re='&lt;a href="/profiles/(\d*)/edit_profile"&gt;Edit Profile'></dyn_variable>
-      	<http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="2" random="true"></thinktime>
-  
-      <!-- validate profileid, or replace with usernumber -->
-      <setdynvars sourcetype="eval" 
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(profileid,DynVars)
-                        ,{ok,Val2}=ts_dynvars:lookup(usernumber,DynVars)
-  		,re:replace(Val,"^$",Val2,[global, {return,list}]) end.'>
-        <var name="profileid" />
-      </setdynvars>
-  
-      <!--Edit contact info-->
-      <request subst="true">
-  <dyn_variable name="authenticity_token"></dyn_variable>
-      	<http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-  
-      <!-- urlencode authenticity_token -->
-      <setdynvars sourcetype="eval" 
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
-                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars>
-      
-      <request subst="true">
-        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
-      	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
-          content_type="application/x-www-form-urlencoded"></http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-
-      <!--Edit public profile-->
-      <request subst="true">
-  <dyn_variable name="authenticity_token"></dyn_variable>
-        <http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-  
-      <!-- urlencode authenticity_token -->
-      <setdynvars sourcetype="eval" 
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
-                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars>
-  
-      <request subst="true">
-        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
-          contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bfirst_name%5d=person%%_usernumber%%&amp;user%5Blast_name%5D=Clinton&amp;profile%5bage%5d=69&amp;profile%5blocation%5d=SantaBarbara&amp;profile%5bartists_list%5d=&amp;profile%5bbio%5d=iLikeCheeseAndMusak"
-          content_type="application/x-www-form-urlencoded"></http>
-      </request>
-      
-      <!--Add some instruments-->
-      <request subst="true">
-        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=1&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded">
-          <http_header name="Accept" value="*/*" />
-        </http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-      
-      <request subst="true">
-        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=2&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded">
-          <http_header name="Accept" value="*/*" />
-        </http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-      
-      <request subst="true">
-        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=3&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded">
-          <http_header name="Accept" value="*/*" />
-        </http>
-      </request>
-      <thinktime value="3" random="true"></thinktime>
-      
-      <request subst="true">
-        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
-          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=4&amp;proficiency=Newb&amp;owned=true"
-          content_type="application/x-www-form-urlencoded">
-          <http_header name="Accept" value="*/*" />
-        </http>
-      </request>
-
- <!-- Go to Jam Groups-->
+       <!-- Go to Jam Groups-->
       <request>
         <http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="1" random="true"></thinktime>
 
 
  <!-- Go to create Jam Groups-->
@@ -287,16 +108,13 @@
       </request>
       <thinktime value="5" random="true"></thinktime>
 
-
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
                         {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
                         ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
         <var name="authenticity_token" />
       </setdynvars>
-
-
-
+			 
  <!--Create  Jam Group-->
       <request>
         <http url='/jam_groups' version='1.1' method='POST' contents="authenticity_token=%%_authenticity_token%%&amp;jam_group[name]=sehseh&amp;jam_group[img_url]=/img/headphone.png&amp;jam_group[description]=yoyo"
@@ -304,20 +122,20 @@
           <http_header name="Accept" value="*/*" />
         </http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="1" random="true"></thinktime>
 
  <!-- Go to Jam Groups-->
       <request>
         <dyn_variable name="groupid" re='&lt;a href="/jam_groups/(\d*)"&gt;'></dyn_variable>
         <http url='/jam_groups' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="5" random="true"></thinktime>
+      <thinktime value="1" random="true"></thinktime>
 
 <!-- Visit Jam Group-->
       <request subst="true">
         <http url='/jam_groups/%%_groupid%%' version='1.1' method='GET'></http>
       </request>
-      <thinktime value="2" random="true"></thinktime>
+      <thinktime value="1" random="true"></thinktime>
 
       <!--Visit chat-->
       <request subst="true">
@@ -340,44 +158,143 @@
           contents="authenticity_token=%%_authenticity_token%%&amp;jam_group=%%_groupid%%&amp;profile=3"
           content_type="application/x-www-form-urlencoded"></http>
       </request>
-      <thinktime value="4" random="true"></thinktime>
+    </session>
 
-	
+
+    
+    <!-- NEW USER -->
+    
+     <session name="new_user" probability="5" type="ts_http">
+      <!-- visit home page -->
+      <request>
+      	<http url='/' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="1" random="true"></thinktime>
+      
+      <!-- visit signup page-->
+      <request>
+        <dyn_variable name="authenticity_token"></dyn_variable>
+      	<http url='/users/sign_up' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="5" random="true"></thinktime>
+      
+      <!-- choose random user -->
+      <setdynvars sourcetype="random_number" start="1" end="200">
+      <var name="usernumber" />
+      </setdynvars>
+  
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval" 
+      code='fun({Pid,DynVars})->
+  {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+  ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+    
+      <!-- sign in -->
+      <request subst="true">
+        <http url='/users/sign_in' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;user%5bemail%5d=person%%_usernumber%%%40example.com&amp;user%5Bpassword%5D=password"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+  
+      <!--Go to edit profile page-->
+      <request subst="true">
+        <dyn_variable name="profileid" re='&lt;a href="/profiles/(\d*)/edit_profile"&gt;Edit Profile'></dyn_variable>
+      	<http url='/profiles/%%_usernumber%%/edit_profile' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+  
+      <!-- validate profileid, or replace with usernumber -->
+      <setdynvars sourcetype="eval" 
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(profileid,DynVars)
+                        ,{ok,Val2}=ts_dynvars:lookup(usernumber,DynVars)
+  		,re:replace(Val,"^$",Val2,[global, {return,list}]) end.'>
+        <var name="profileid" />
+      </setdynvars>
+  
+      <!--Go to edit contact info-->
+      <request subst="true">
+  <dyn_variable name="authenticity_token"></dyn_variable>
+      	<http url='/profiles/%%_profileid%%/edit_contact' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="3" random="true"></thinktime>
+  
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval" 
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+      
+      <request subst="true">
+        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
+      	  contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bphone%5d=800555%%_usernumber%%"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+
+      <!--Get edit public profile-->
+      <request subst="true">
+  <dyn_variable name="authenticity_token"></dyn_variable>
+        <http url='/profiles/%%_profileid%%/edit_profile' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="3" random="true"></thinktime>
+  
+      <!-- urlencode authenticity_token -->
+      <setdynvars sourcetype="eval" 
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars)
+                        ,re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+  
+	     <!-- edit public profile-->
+      <request subst="true">
+        <http url='/profiles/%%_profileid%%' version='1.1' method='POST'
+          contents="authenticity_token=%%_authenticity_token%%&amp;_method=patch&amp;profile%5bfirst_name%5d=person%%_usernumber%%&amp;user%5Blast_name%5D=Clinton&amp;profile%5bage%5d=69&amp;profile%5blocation%5d=SantaBarbara&amp;profile%5bartists_list%5d=&amp;profile%5bbio%5d=iLikeCheeseAndMusak"
+          content_type="application/x-www-form-urlencoded"></http>
+      </request>
+			 <thinktime value="2" random="true"></thinktime>
+      
+      <!--Add a couple instruments-->
+			 <request subst="true">
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=1&amp;proficiency=Virtuoso&amp;owned=false"
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
+      </request>
+			 <thinktime value="2" random="true"></thinktime>
+			 
+      <request subst="true">
+        <http url="/profiles/%%_profileid%%/addInstrument" version="1.1" method="POST"
+          contents="authenticity_token=%%_authenticity_token%%&amp;instrument=4&amp;proficiency=Newb&amp;owned=true"
+          content_type="application/x-www-form-urlencoded">
+          <http_header name="Accept" value="*/*" />
+        </http>
+      </request>
     </session>
 
 
 
 
+	<!-- Anon user -->
 
+	<session name="anonymous" probability="65" type="ts_http">
+	      <!-- visit home page -->
+	      <request>
+		<http url='/' version='1.1' method='GET'></http>
+	      </request>
+	      <thinktime value="2" random="true"></thinktime>
 
+	      <request>
+		<http url='/?utf8=%E2%9C%93&amp;first_name=&amp;last_name=&amp;location=&amp;age_low=24&amp;age_high=29&amp;instrument=&amp;commit=Go%21' version='1.1' method='GET'></http>
+	      </request>
 
-
-
-
-
-
-
-<!-- Anon user -->
-
-
-
-
-<session name="anonymous" probability="65" type="ts_http">
-      <!-- visit home page -->
-      <request>
-        <http url='/' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="2" random="true"></thinktime>
-
-
-      <request>
-        <http url='/?utf8=%E2%9C%93&amp;first_name=&amp;last_name=&amp;location=&amp;age_low=24&amp;age_high=29&amp;instrument=&amp;commit=Go%21' version='1.1' method='GET'></http>
-      </request>
-
-
-</session>
-
-
+	</session>
 
   </sessions>
 </tsung>
