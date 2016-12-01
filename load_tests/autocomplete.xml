@@ -9,25 +9,25 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="jamsesh-demo.2pnkiak6fm.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+    <server host="jay-jamsesh3.wxtcguxzgh.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
 
 
   <load>
-    <arrivalphase phase="1" duration="5" unit="second">
+    <arrivalphase phase="1" duration="20" unit="second">
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="2" duration="5" unit="second">
+    <arrivalphase phase="2" duration="20" unit="second">
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="3" duration="5" unit="second">
-      <users arrivalrate="3" unit="second"></users>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="5" unit="second">
+    <arrivalphase phase="3" duration="20" unit="second">
       <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="5" duration="5" unit="second">
-      <users arrivalrate="5" unit="second"></users>
+    <arrivalphase phase="4" duration="20" unit="second">
+      <users arrivalrate="6" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="20" unit="second">
+      <users arrivalrate="8" unit="second"></users>
     </arrivalphase>
   </load>
 
@@ -42,11 +42,11 @@
 
   <sessions>
     <session name="autocomplete" probability="100" type="ts_http">
-      <setdynvars sourcetype="random_string" length="4">
+      <setdynvars sourcetype="random_string" length="1">
         <var name="rand_string" />
       </setdynvars>
       <request subst="true">
-	      <http url='/spotty_api/autocomplete?term=%%_rand_string%%' version='1.1' method='GET'></http>
+              <http url='/spotty_api/autocomplete?term=%%_rand_string%%' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
     </session>

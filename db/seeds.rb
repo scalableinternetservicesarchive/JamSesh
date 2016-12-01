@@ -1,5 +1,4 @@
 require "factory_girl"
-require 'Spotty'
 #FactoryGirl.find_definitions
 
 FactoryGirl.create_list(:instrument, 30)
