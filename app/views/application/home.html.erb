@@ -12,6 +12,8 @@ Search:
 <%= submit_tag "Go!" %>
 <% end %>
 
+  <% cache(cache_key_for_profile_listing) do %>
+
   <%= will_paginate @profiles %>
 
   <table class="table table-striped">
@@ -28,19 +30,20 @@ Search:
     <tbody>
       <% if @profiles.present? %>
         <% @profiles.each do |profile| %>
-          <tr>
-            <td><%= profile.first_name + ' ' + profile.last_name%></td>
-            <td><%= profile.age %></td>
-            <td><%= profile.location %></td>
-            <td>
-            <% profile.instrument.each do |instrument| %>
-              <%= instrument.name %>
+          <% cache(cache_key_for_profile(profile)) do %>
+            <tr>
+              <td><%= profile.first_name %> <%= profile.last_name%></td>
+              <td><%= profile.age %></td>
+              <td><%= profile.location %></td>
+              <td>
+              <% profile.instrument.each do |instrument| %>
+                <%= instrument.name %>
               <% end %>
-            </td>
-            <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
-            <td><%= link_to 'Profile', profile %></td>
-            
-          </tr>
+              </td>
+              <td><%= profile.created_at.to_date.to_formatted_s(:rfc822) %></td>
+              <td><%= link_to 'Profile', profile %></td>
+            </tr>
+          <% end %>
         <% end %>
       <% else %>
       <p>We could not find users matching your search request.</p>
@@ -49,4 +52,5 @@ Search:
   </table>
 
   <%= will_paginate @profiles %>
+  <% end %>
 </div>
